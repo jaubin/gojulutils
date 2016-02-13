@@ -1,5 +1,6 @@
 package org.gojul.gojulutils.safetools;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -42,5 +43,16 @@ public class GojulCollections {
 	 */
 	public static <T> Set<T> unmodifiableSet(final Set<T> s) {
 		return s == null ? Collections.<T> emptySet(): Collections.unmodifiableSet(s);
+	}
+		
+	/**
+	 * Return an unmodifiable {@link Collection} around {@code c},
+	 * or an empty unmodifiable collection if {@code c} is {@code empty}.
+	 * @param c the {@link Collection} to wrap.
+	 * @return an unmodifiable {@link Collection} around {@code c},
+	 * or an empty unmodifiable collection if {@code c} is {@code empty}.
+	 */
+	public static <T> Collection<T> unmodifiableCollection(final Collection<T> c) {
+		return c == null ? Collections.<T> emptySet(): Collections.unmodifiableCollection(c);
 	}
 }
