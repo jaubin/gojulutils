@@ -125,6 +125,14 @@ public class GojulValidationErrorMessageContainer<K extends Serializable, V exte
 	public List<GojulValidationErrorMessage<K, V>> getMessages() {
 		return Collections.unmodifiableList(errorMessages);
 	}
+	
+	/**
+	 * Return {@code true} if this container contains error, {@code false} otherwise.
+	 * @return {@code true} if this container contains error, {@code false} otherwise.
+	 */
+	public boolean hasErrors() {
+		return !errorMessages.isEmpty();
+	}
 
 	/**
 	 * {@inheritDoc}

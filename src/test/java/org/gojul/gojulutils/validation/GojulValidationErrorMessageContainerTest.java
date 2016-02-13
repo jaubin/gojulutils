@@ -79,5 +79,16 @@ public class GojulValidationErrorMessageContainerTest {
 		
 		assertEquals(Arrays.asList(msg1), msgContainer.getMessages());
 	}
+	
+	@Test
+	public void testHasErrorsWithEmptyContainerReturnsFalse() {
+		assertFalse(msgContainer.hasErrors());
+	}
+	
+	@Test
+	public void testHasErrors() {
+		msgContainer.addError(msg1);
+		assertTrue(msgContainer.hasErrors());
+	}
 
 }
