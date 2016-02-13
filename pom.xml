@@ -8,6 +8,20 @@
   
   <dependencies>
   
+    <dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-api</artifactId>
+		<version>1.7.16</version>
+	</dependency>
+	
+	<!-- Users may not want to use JAXB marshalling with the library. -->
+	<dependency>
+		<groupId>javax.xml</groupId>
+		<artifactId>jaxb-api</artifactId>
+		<version>2.1</version>
+		<scope>compile</scope>
+	</dependency>
+  
   	<dependency>
   		<groupId>junit</groupId>
   		<artifactId>junit</artifactId>
@@ -22,18 +36,13 @@
   		<version>1.1.3</version>
   		<scope>test</scope>	
   	</dependency>
-  
+  	
   	<dependency>
-		<groupId>org.slf4j</groupId>
-		<artifactId>slf4j-api</artifactId>
-		<version>1.7.16</version>
-	</dependency>
-	
-	<dependency>
-		<groupId>javax.xml</groupId>
-		<artifactId>jaxb-api</artifactId>
-		<version>2.1</version>
-	</dependency>
+  	    <groupId>org.mockito</groupId>
+  	    <artifactId>mockito-all</artifactId>
+  	    <version>1.9.5</version>
+  	    <scope>test</scope>
+  	</dependency>
   
   
   </dependencies>
