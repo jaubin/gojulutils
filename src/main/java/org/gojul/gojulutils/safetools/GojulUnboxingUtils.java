@@ -85,4 +85,28 @@ public class GojulUnboxingUtils {
 	public static long unboxLong(final Long l, final long defaultValue) {
 		return l == null ? defaultValue: l.longValue();
 	}
+	
+	/**
+	 * Return the unboxed flavour of {@code f} if {@code f} is not {@code null}, {@code defaultValue}
+	 * otherwise.
+	 * @param f the {@link Float} instance to unbox.
+	 * @param defaultValue the default value provided if {@code f} is {@code null}.
+	 * @return the unboxed flavour of {@code f} if {@code f} is not {@code null}, {@code defaultValue}
+	 * otherwise.
+	 */
+	public static float unboxFloat(final Float f, final float defaultValue) {
+		return f == null ? defaultValue: f.floatValue();
+	}
+	
+	/**
+	 * Return the unboxed flavour of {@code d} if {@code d} is not {@code null}, {@code defaultValue}
+	 * otherwise.
+	 * @param d the {@link Double} instance to unbox.
+	 * @param defaultValue the default value provided if {@code d} is {@code null}.
+	 * @return the unboxed flavour of {@code d} if {@code d} is not {@code null}, {@code defaultValue}
+	 * otherwise.
+	 */
+	public static double unboxDouble(final Double d, final double defaultValue) {
+		return d == null ? defaultValue: d.doubleValue();
+	}
 }

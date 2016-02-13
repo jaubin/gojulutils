@@ -43,4 +43,16 @@ public class GojulUnboxingUtilsTest {
 		assertEquals(12L, unboxLong(null, 12L));
 		assertEquals(15L, unboxLong(Long.valueOf(15), 12L));
 	}
+	
+	@Test
+	public void testUnboxFloat() {
+		assertEquals(12f, unboxFloat(null, 12f), 0.05f);
+		assertEquals(15f, unboxFloat(Float.valueOf(15f), 12f), 0.05f);
+	}
+	
+	@Test
+	public void testUnboxDouble() {
+		assertEquals(12d, unboxDouble(null, 12d), 0.05d);
+		assertEquals(15d, unboxDouble(Double.valueOf(15d), 12d), 0.05d);
+	}
 }
