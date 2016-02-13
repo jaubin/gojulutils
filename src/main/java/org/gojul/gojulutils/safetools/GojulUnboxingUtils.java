@@ -73,4 +73,16 @@ public class GojulUnboxingUtils {
 	public static int unboxInt(final Integer i, final int defaultValue) {
 		return i == null ? defaultValue: i.intValue();
 	}
+	
+	/**
+	 * Return the unboxed flavour of {@code l} if {@code l} is not {@code null}, {@code defaultValue}
+	 * otherwise.
+	 * @param l the {@link Long} instance to unbox.
+	 * @param defaultValue the default value provided if {@code l} is {@code null}.
+	 * @return the unboxed flavour of {@code l} if {@code l} is not {@code null}, {@code defaultValue}
+	 * otherwise.
+	 */
+	public static long unboxLong(final Long l, final long defaultValue) {
+		return l == null ? defaultValue: l.longValue();
+	}
 }

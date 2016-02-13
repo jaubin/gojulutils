@@ -37,4 +37,10 @@ public class GojulUnboxingUtilsTest {
 		assertEquals(12, unboxInt(null, 12));
 		assertEquals(15, unboxInt(Integer.valueOf(15), 12));
 	}
+	
+	@Test
+	public void testUnboxLong() {
+		assertEquals(12L, unboxLong(null, 12L));
+		assertEquals(15L, unboxLong(Long.valueOf(15), 12L));
+	}
 }
