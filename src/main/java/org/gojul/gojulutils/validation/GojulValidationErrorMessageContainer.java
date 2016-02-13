@@ -39,6 +39,26 @@ public class GojulValidationErrorMessageContainer<K extends Serializable, V exte
 
 	private static final long serialVersionUID = -3709275791472687630L;
 	
+	/**
+	 * Interface {@code GojulValidationErrorMessageInstanciator} is a functional interface which allows you
+	 * to instanciate error messages easily. It is very handy to use with Java 8 lambdas, but can be painful
+	 * to use with pre-Java 8 classes.
+	 * 
+	 * @author julien
+	 *
+	 * @param <K> the key of the message, which identifies the element of the user interface that is
+	 * intended to be targeted by the error message. This object should be immutable.
+	 * @param <V> the message itself to display. This object should be immutable.
+	 */
+	public static interface GojulValidationErrorMessageInstanciator<K extends Serializable, V extends Serializable> {
+		
+		/**
+		 * Create a new error message.
+		 * @return a new error message.
+		 */
+		public GojulValidationErrorMessage<K, V> instanciateErrorMessage();
+	}
+	
 	@XmlElement
 	private List<GojulValidationErrorMessage<K, V>> errorMessages;
 	
@@ -69,10 +89,31 @@ public class GojulValidationErrorMessageContainer<K extends Serializable, V exte
 	 * @param msg the message to add if {@code assertion} is {@code false}.
 	 * 
 	 * @throws NullPointerException if {@code msg} is {@code false}.
+	 * 
+	 * @see GojulValidationErrorMessageContainer#addError(boolean, GojulValidationErrorMessageInstanciator)
 	 */
 	public void addError(final boolean assertion, final GojulValidationErrorMessage<K, V> msg) {
 		GojulPreconditions.checkNotNull(msg, "msg is null");
 		if (!assertion) {
+			this.errorMessages.add(msg);
+		}
+	}
+	
+	/**
+	 * Instanciate an error message using {@code instanciator} and add it to this container if and only if {@code assertion}
+	 * is {@code false}. This method is very handy to use with Java 8 as it supports lambdas.
+	 * 
+	 * @param assertion the assertion to test.
+	 * @param instanciator the message instanciator used if {@code assertion} is {@code false}.
+	 * 
+	 * @throws NullPointerException if {@code instanciator} is {@code false}.
+	 * @throws IllegalArgumentException if {@code instanciator} returns a {@code null} value.
+	 */
+	public void addError(final boolean assertion, final GojulValidationErrorMessageInstanciator<K, V> instanciator) {
+		GojulPreconditions.checkNotNull(instanciator, "instanciator is null");
+		if (!assertion) {
+			GojulValidationErrorMessage<K, V> msg = instanciator.instanciateErrorMessage();
+			GojulPreconditions.checkAssertion(msg != null, "Trying to create a null error message !");
 			this.errorMessages.add(msg);
 		}
 	}

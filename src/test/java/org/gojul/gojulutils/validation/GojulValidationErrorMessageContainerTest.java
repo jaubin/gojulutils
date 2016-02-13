@@ -1,6 +1,7 @@
 package org.gojul.gojulutils.validation;
 
 import static org.junit.Assert.*;
+import static org.gojul.gojulutils.validation.GojulValidationErrorMessageContainer.*;
 
 import java.util.Arrays;
 
@@ -35,13 +36,46 @@ public class GojulValidationErrorMessageContainerTest {
 	
 	@Test(expected = NullPointerException.class)
 	public void testAddErrorWithAssertionAndNullMessageThrowsException() {
-		msgContainer.addError(1 == 0, null);
+		msgContainer.addError(1 == 0, (GojulValidationErrorMessage<String, String>) null);
 	}
 	
 	@Test
 	public void testAddErrorWithAssertion() {
 		msgContainer.addError(1 == 0, msg1);
 		msgContainer.addError(1 > 0, msg2);
+		
+		assertEquals(Arrays.asList(msg1), msgContainer.getMessages());
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void testAddErrorWithNullInstanciatorThrowsException() {
+		msgContainer.addError(1 == 0, (GojulValidationErrorMessageInstanciator<String, String>) null);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddErrorWithInstanciatorReturningNullThrowsException() {
+		msgContainer.addError(1 == 0, new GojulValidationErrorMessageInstanciator<String, String>() {
+			@Override
+			public GojulValidationErrorMessage<String, String> instanciateErrorMessage() {
+				return null;
+			}
+		});
+	}
+	
+	@Test
+	public void testAddError() {
+		msgContainer.addError(1 == 0, new GojulValidationErrorMessageInstanciator<String, String>() {
+			@Override
+			public GojulValidationErrorMessage<String, String> instanciateErrorMessage() {
+				return msg1;
+			}
+		});
+		msgContainer.addError(1 > 0, new GojulValidationErrorMessageInstanciator<String, String>() {
+			@Override
+			public GojulValidationErrorMessage<String, String> instanciateErrorMessage() {
+				return msg2;
+			}
+		});
 		
 		assertEquals(Arrays.asList(msg1), msgContainer.getMessages());
 	}

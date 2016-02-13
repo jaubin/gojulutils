@@ -52,7 +52,7 @@ public class GojulPreconditions {
 	public static void checkAssertion(final boolean assertion, final String message) {
 		if (!assertion) {
 			log.error(message);
-			throw new NullPointerException(message);
+			throw new IllegalArgumentException(message);
 		}
 	}
 }
