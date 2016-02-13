@@ -25,5 +25,17 @@ public class GojulUnboxingUtils {
 	public static boolean safeUnboxBoolean(final Boolean b) {
 		return Boolean.TRUE.equals(b);
 	}
+	
+	/**
+	 * Return the unboxed flavour of {@code c} if {@code c} is not {@code null}, {@code defaultValue}
+	 * otherwise.
+	 * @param c the {@link Character} instance to unbox.
+	 * @param defaultValue the default value provided if {@code c} is {@code null}.
+	 * @return the unboxed flavour of {@code c} if {@code c} is not {@code null}, {@code defaultValue}
+	 * otherwise.
+	 */
+	public static char safeUnboxChar(final Character c, final char defaultValue) {
+		return c == null ? defaultValue: c.charValue();
+	}
 
 }

@@ -14,4 +14,9 @@ public class GojulUnboxingUtilsTest {
 		assertTrue(safeUnboxBoolean(Boolean.TRUE));
 	}
 
+	@Test
+	public void testSafeUnboxChar() {
+		assertEquals('a', safeUnboxChar(null, 'a'));
+		assertEquals('c', safeUnboxChar(Character.valueOf('c'), 'a'));
+	}
 }
