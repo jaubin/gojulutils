@@ -22,7 +22,7 @@ public class GojulUnboxingUtils {
 	 * @param b the object to unbox.
 	 * @return {@code true} if {@code b} equals {@link Boolean#TRUE}, {@code false} otherwise.
 	 */
-	public static boolean safeUnboxBoolean(final Boolean b) {
+	public static boolean unboxBoolean(final Boolean b) {
 		return Boolean.TRUE.equals(b);
 	}
 	
@@ -34,8 +34,43 @@ public class GojulUnboxingUtils {
 	 * @return the unboxed flavour of {@code c} if {@code c} is not {@code null}, {@code defaultValue}
 	 * otherwise.
 	 */
-	public static char safeUnboxChar(final Character c, final char defaultValue) {
+	public static char unboxChar(final Character c, final char defaultValue) {
 		return c == null ? defaultValue: c.charValue();
 	}
+	
+	/**
+	 * Return the unboxed flavour of {@code b} if {@code b} is not {@code null}, {@code defaultValue}
+	 * otherwise.
+	 * @param b the {@link Byte} instance to unbox.
+	 * @param defaultValue the default value provided if {@code b} is {@code null}.
+	 * @return the unboxed flavour of {@code b} if {@code b} is not {@code null}, {@code defaultValue}
+	 * otherwise.
+	 */
+	public static byte unboxByte(final Byte b, final byte defaultValue) {
+		return b == null ? defaultValue: b.byteValue();
+	}
+	
+	/**
+	 * Return the unboxed flavour of {@code s} if {@code s} is not {@code null}, {@code defaultValue}
+	 * otherwise.
+	 * @param s the {@link Short} instance to unbox.
+	 * @param defaultValue the default value provided if {@code s} is {@code null}.
+	 * @return the unboxed flavour of {@code s} if {@code s} is not {@code null}, {@code defaultValue}
+	 * otherwise.
+	 */
+	public static short unboxShort(final Short s, final short defaultValue) {
+		return s == null ? defaultValue: s.shortValue();
+	}
 
+	/**
+	 * Return the unboxed flavour of {@code i} if {@code i} is not {@code null}, {@code defaultValue}
+	 * otherwise.
+	 * @param i the {@link Integer} instance to unbox.
+	 * @param defaultValue the default value provided if {@code i} is {@code null}.
+	 * @return the unboxed flavour of {@code i} if {@code i} is not {@code null}, {@code defaultValue}
+	 * otherwise.
+	 */
+	public static int unboxInt(final Integer i, final int defaultValue) {
+		return i == null ? defaultValue: i.intValue();
+	}
 }
