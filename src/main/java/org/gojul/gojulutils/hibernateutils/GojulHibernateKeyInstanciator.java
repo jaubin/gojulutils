@@ -21,6 +21,6 @@ public interface GojulHibernateKeyInstanciator<K, E extends GojulHibernateMergea
 	 * @param element the element for which the key must be generated.
 	 * @return the key corresponding to element {@code element}.
 	 */
-	public K generateKey(final GojulHibernateMergeable<E> element);
+	public K generateKey(final E element);
 	
 }
