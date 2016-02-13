@@ -148,7 +148,7 @@ public class GojulHibernateCollectionsMergeTool<K, E extends GojulHibernateMerge
 	private E getSourceEntityAndMarkKeyAsProcessed(final E entityToMerge, final Set<K> unprocessedKeys) {
 		K key = keyInstanciator.generateKey(entityToMerge);
 		E result = getEntityForKey(key);
-		unprocessedKeys.add(key);
+		unprocessedKeys.remove(key);
 		return result;
 	}
 	
