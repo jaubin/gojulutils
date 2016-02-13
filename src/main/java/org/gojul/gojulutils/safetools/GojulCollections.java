@@ -3,6 +3,7 @@ package org.gojul.gojulutils.safetools;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -54,5 +55,16 @@ public class GojulCollections {
 	 */
 	public static <T> Collection<T> unmodifiableCollection(final Collection<T> c) {
 		return c == null ? Collections.<T> emptySet(): Collections.unmodifiableCollection(c);
+	}
+	
+	/**
+	 * Return an unmodifiable {@link Map} around {@code m},
+	 * or an empty unmodifiable map if {@code m} is {@code empty}.
+	 * @param m the {@link Map} to wrap.
+	 * @return an unmodifiable {@link Map} around {@code m},
+	 * or an empty unmodifiable map if {@code m} is {@code empty}.
+	 */
+	public static <K, V> Map<K, V> unmodifiableMap(final Map<K, V> m) {
+		return m == null ? Collections.<K, V> emptyMap(): Collections.unmodifiableMap(m);
 	}
 }
