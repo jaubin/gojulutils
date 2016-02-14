@@ -12,3 +12,6 @@ This library will be filled over time with new content from the recurring code I
 
 * safetools : a collection of tools which solve some safety issues with the standard Java library such as unboxing and so on.
 
+# Remarks
+
+* All classes in this project have their name prefixed with Gojul. The goal is not to put a trademark, but instead to avoid naming collisions with the rest of your project libraries (and even your project classes).
