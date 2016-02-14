@@ -1,6 +1,7 @@
 package org.gojul.gojulutils.safetools;
 
 import static org.junit.Assert.*;
+import static org.gojul.gojulutils.safetools.GojulDateFormatBuilder.*;
 
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
@@ -26,6 +27,9 @@ public class GojulDateFormatBuilderTest {
 		assertEquals(Locale.getDefault(), builder.getLocale());
 		assertEquals(TimeZone.getDefault(), builder.getTimeZone());
 		assertNull(builder.getSymbols());
+		
+		assertEquals(new GojulDateFormatKey("yyyy/MM/dd", Locale.getDefault(), TimeZone.getDefault(), null), builder.toDateFormatKey());
+
 	}
 	
 	@Test
@@ -36,14 +40,30 @@ public class GojulDateFormatBuilderTest {
 				.setSymbols(symbols)
 				.setTimeZone(TimeZone.getTimeZone("UTC"));
 		
-		assertEquals(Locale.ENGLISH, builder.getLocale());
+		assertNull(builder.getLocale());
 		assertEquals(TimeZone.getTimeZone("UTC"), builder.getTimeZone());
 		assertEquals(symbols, builder.getSymbols());
+		
+		assertEquals(new GojulDateFormatKey("yyyy/MM/dd", null, TimeZone.getTimeZone("UTC"), symbols), builder.toDateFormatKey());
 		
 	}
 	
 	@Test
-	public void testBuildWithAllFieldExceptTimeZoneSetUsesDateFormatAndNotLocale() {
+	public void testBuilderWithAllFieldsSetExceptSymbols() {
+		GojulDateFormatBuilder builder = new GojulDateFormatBuilder("yyyy/MM/dd")
+				.setLocale(Locale.ENGLISH)
+				.setSymbols(null)
+				.setTimeZone(TimeZone.getTimeZone("UTC"));
+		
+		assertEquals(Locale.ENGLISH, builder.getLocale());
+		assertEquals(TimeZone.getTimeZone("UTC"), builder.getTimeZone());
+		
+		assertEquals(new GojulDateFormatKey("yyyy/MM/dd", Locale.ENGLISH, TimeZone.getTimeZone("UTC"), null), builder.toDateFormatKey());
+		
+	}
+	
+	@Test
+	public void testBuildWithAllFieldExceptTimeZoneSetUsesDateFormatSymbolsAndNotLocale() {
 		DateFormatSymbols symbols = new DateFormatSymbols(Locale.CHINESE);
 		GojulDateFormatBuilder builder = new GojulDateFormatBuilder("yyyy/MM/dd")
 				.setLocale(Locale.ENGLISH)

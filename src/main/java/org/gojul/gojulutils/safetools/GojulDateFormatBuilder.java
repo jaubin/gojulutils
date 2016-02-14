@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TimeZone;
 
 import org.gojul.gojulutils.validation.GojulPreconditions;
@@ -87,7 +88,10 @@ public class GojulDateFormatBuilder {
 	 * @return the {@link Locale} used for this builder.
 	 */
 	Locale getLocale() {
-		return this.locale == null ? Locale.getDefault(): this.locale;
+		if (this.symbols != null) {
+			return null;
+		}
+		return this.locale == null ? Locale.getDefault(): (Locale) this.locale.clone();
 	}
 	
 	/**
@@ -96,7 +100,7 @@ public class GojulDateFormatBuilder {
 	 * @return the {@link TimeZone} used for this builder.
 	 */
 	TimeZone getTimeZone() {
-		return this.timeZone == null ? TimeZone.getDefault(): this.timeZone;
+		return this.timeZone == null ? TimeZone.getDefault(): (TimeZone) this.timeZone.clone();
 	}
 	
 	/**
@@ -105,7 +109,7 @@ public class GojulDateFormatBuilder {
 	 * @return the {@link DateFormatSymbols} used for this builder.
 	 */
 	DateFormatSymbols getSymbols() {
-		return this.symbols;
+		return this.symbols == null ? null: (DateFormatSymbols) this.symbols.clone();
 	}
 	
 	/**
@@ -122,53 +126,98 @@ public class GojulDateFormatBuilder {
 		result.setTimeZone(getTimeZone());
 		return result;
 	}
-
+	
 	/**
-	 * {@inheritDoc}
+	 * Class {@code GojulDateFormatKey} is an immutable {@link DateFormat} key that allows
+	 * to discriminate {@link DateFormat} instances for caching. This object aims to be immutable
+	 * to grant it as a suitable {@link Map} key.
+	 * 
+	 * @author julien
+	 *
 	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((format == null) ? 0 : format.hashCode());		
-		return result;
-	}
+	final static class GojulDateFormatKey {
+		
+		private final String format;
+		private final Locale locale;
+		private final TimeZone timeZone;
+		private final DateFormatSymbols symbols;
+		
+		private GojulDateFormatKey(final GojulDateFormatBuilder builder) {
+			this.format = builder.format;
+			this.locale = builder.getLocale();
+			this.timeZone = builder.getTimeZone();
+			this.symbols = builder.getSymbols();
+		}
+		
+		/**
+		 * Constructor used only for unit tests, not in production ! Thus it does not guarantee object immutability !
+		 * @param format the date format of the key.
+		 * @param locale the date format locale.
+		 * @param tz the date format time zone.
+		 * @param symbols the date format symbols.
+		 */
+		GojulDateFormatKey(final String format, final Locale locale, final TimeZone tz, final DateFormatSymbols symbols) {
+			this.format = format;
+			this.locale = locale;
+			this.timeZone = tz;
+			this.symbols = symbols;
+		}
+		
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + ((format == null) ? 0 : format.hashCode());		
+			return result;
+		}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public boolean equals(final Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			GojulDateFormatKey other = (GojulDateFormatKey) obj;
+			if (format == null) {
+				if (other.format != null)
+					return false;
+			} else if (!format.equals(other.format))
+				return false;
+			if (locale == null) {
+				if (other.locale != null)
+					return false;
+			} else if (!locale.equals(other.locale))
+				return false;
+			if (symbols == null) {
+				if (other.symbols != null)
+					return false;
+			} else if (!symbols.equals(other.symbols))
+				return false;
+			if (timeZone == null) {
+				if (other.timeZone != null)
+					return false;
+			// We compare the timezone Ids because timezone instances rely
+			// on reference identity rather than equals/hashcode.
+			// Thus TimeZone IDs cannot be null.
+			} else if (!timeZone.getID().equals(other.timeZone.getID()))
+				return false;
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		GojulDateFormatBuilder other = (GojulDateFormatBuilder) obj;
-		if (format == null) {
-			if (other.format != null)
-				return false;
-		} else if (!format.equals(other.format))
-			return false;
-		if (locale == null) {
-			if (other.locale != null)
-				return false;
-		} else if (!locale.equals(other.locale))
-			return false;
-		if (symbols == null) {
-			if (other.symbols != null)
-				return false;
-		} else if (!symbols.equals(other.symbols))
-			return false;
-		if (timeZone == null) {
-			if (other.timeZone != null)
-				return false;
-		// We compare the timezone Ids because timezone instances rely
-		// on reference identity rather than equals/hashcode.
-		// Thus TimeZone IDs cannot be null.
-		} else if (!timeZone.getID().equals(other.timeZone.getID()))
-			return false;
-		return true;
+		}
+	}
+	
+	/**
+	 * Return the {@link DateFormat} key corresponding to this instance.
+	 * @return the {@link DateFormat} key corresponding to this instance.
+	 */
+	GojulDateFormatKey toDateFormatKey() {
+		return new GojulDateFormatKey(this);
 	}
 }
