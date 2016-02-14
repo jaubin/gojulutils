@@ -41,6 +41,39 @@ public class GojulDateFormatter {
 	}
 	
 	/**
+	 * <p>
+	 * Parse the date from {@link String} {@code s} using the date format string
+	 * {@code formatString}, and return the corresponding {@link Date} instance.
+	 * Note that if an error occurs while parsing the date this method simply returns {@code null}
+	 * instead of causing you to manage a {@link ParseException}. If {@code null} values are forbidden
+	 * in your code just use {@link GojulPreconditions#checkAssertion(boolean, String)} to test this
+	 * in a declarative way.
+	 * </p>
+	 * <p>
+	 * This method is a simple shortcut to :
+	 * <pre>
+	 * <code>
+	 * GojulDateFormatter.parse(new GojulDateFormatBuilder(format), s);
+	 * </code>
+	 * </pre>
+	 * 
+	 * @param formatString the format string used to perform the parsing.
+	 * @param s the date to parse.
+	 * @return the date from {@link String} {@code s} using the date format string
+	 * {@code formatString}, and return the corresponding {@link Date} instance, or
+	 * {@code null} if a parse error occurs.
+	 * 
+	 * @throws NullPointerException if any of the method parameters is {@code null}.
+	 * @throws IllegalArgumentException if the date format supplied by {@code builder} is an invalid
+	 * one.
+	 */
+	public static Date parse(final String formatString, final String s) {
+		GojulPreconditions.checkNotNull(formatString, "formatString is null");
+		GojulPreconditions.checkNotNull(s, "s is null");
+		return parse(new GojulDateFormatBuilder(formatString), s);
+	}
+	
+	/**
 	 * Parse the date from {@link String} {@code s} using the date format characteristics
 	 * supplied with {@code builder}, and return the corresponding {@link Date} instance.
 	 * Note that if an error occurs while parsing the date this method simply returns {@code null}
