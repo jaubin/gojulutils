@@ -19,8 +19,11 @@ public class GojulDecimalFormatterTest {
 		Locale locale = Locale.getDefault();
 		// For test portability
 		Locale.setDefault(Locale.ENGLISH);
-		assertEquals("01.345", GojulDecimalFormatter.format("00.000", 1.345d));
-		Locale.setDefault(locale);
+		try {
+			assertEquals("01.345", GojulDecimalFormatter.format("00.000", 1.345d));
+		} finally {
+			Locale.setDefault(locale);
+		}
 	}
 
 	@Test(expected = NullPointerException.class)
@@ -33,8 +36,11 @@ public class GojulDecimalFormatterTest {
 		Locale locale = Locale.getDefault();
 		// For test portability
 		Locale.setDefault(Locale.ENGLISH);
-		assertEquals("01345.000", GojulDecimalFormatter.format("00000.000", 1345L));
-		Locale.setDefault(locale);
+		try {
+			assertEquals("01345.000", GojulDecimalFormatter.format("00000.000", 1345L));
+		} finally {
+			Locale.setDefault(locale);
+		}
 	}
 	
 	@Test(expected = NullPointerException.class)
