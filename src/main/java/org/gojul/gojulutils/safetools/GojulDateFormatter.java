@@ -41,6 +41,28 @@ public class GojulDateFormatter {
 	}
 	
 	/**
+	 * Format the date {@code d} using the date format characteristics supplied by {@code builder}.
+	 * 
+	 * @param builder the builder instance used to instanciate the right {@link SimpleDateFormat}
+	 * if necessary.
+	 * @param d the date to format.
+	 * @return the date {@code d} formatted as a {@link String} using the date format characteristics
+	 * supplied by {@code builder}.
+	 * 
+	 * @throws NullPointerException if any of the method parameters is {@code null}.
+	 * @throws IllegalArgumentException if the date format supplied by {@code builder} is an invalid
+	 * one.
+	 */
+	public static String format(final GojulDateFormatBuilder builder, final Date d) {
+		GojulPreconditions.checkNotNull(builder, "builder is null");
+		GojulPreconditions.checkNotNull(d, "d is null");
+		SimpleDateFormat sdf = getOrCreateDateFormat(builder);
+		synchronized(sdf) {
+			return sdf.format(d);
+		}
+	}
+	
+	/**
 	 * <p>
 	 * Parse the date from {@link String} {@code s} using the date format string
 	 * {@code formatString}, and return the corresponding {@link Date} instance.

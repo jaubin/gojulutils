@@ -17,7 +17,7 @@ public class GojulDateFormatterTest {
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void testParseWithStringThrowsException() {
+	public void testParseWithNullStringThrowsException() {
 		GojulDateFormatter.parse(new GojulDateFormatBuilder("yyyy/MM/dd"), null);
 	}
 	
@@ -69,5 +69,32 @@ public class GojulDateFormatterTest {
 		assertEquals(expected, GojulDateFormatter.parse(formatString, s));
 		// Test the cache.
 		assertEquals(expected, GojulDateFormatter.parse(formatString, s));
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void testFormatWithNullBuilderThrowsException() {
+		GojulDateFormatter.format((GojulDateFormatBuilder) null, new Date());
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void testFormatWithNullStringThrowsException() {
+		GojulDateFormatter.format(new GojulDateFormatBuilder("yyyy/MM/dd"), null);
+	}
+	
+	@Test
+	public void testFormat() throws Exception {
+		GojulDateFormatBuilder builder = new GojulDateFormatBuilder("yyyy/MM/dd hh:mm:ss")
+				.setLocale(Locale.ENGLISH)
+				.setTimeZone(TimeZone.getTimeZone("UTC"));
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss", Locale.ENGLISH);
+		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+		
+		Date d = new Date();
+		String expected = sdf.format(d);
+		
+		assertEquals(expected, GojulDateFormatter.format(builder, d));
+		// Test the cache.
+		assertEquals(expected, GojulDateFormatter.format(builder, d));
 	}
 }
