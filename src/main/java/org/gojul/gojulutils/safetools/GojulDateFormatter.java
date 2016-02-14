@@ -41,6 +41,30 @@ public class GojulDateFormatter {
 	}
 	
 	/**
+	 * Format the date {@code d} using the format string {@code formatString}. This method is a simple shortcut
+	 * to :
+	 * <pre>
+	 * <code>
+	 * GojulDateFormatter.format(new GojulDateFormatBuilder(string), date);
+	 * </code>
+	 * </pre>
+	 * 
+	 * @param formatString the format string used to perform the parsing. See the specification of
+	 * {@link SimpleDateFormat} to check its syntax.
+	 * @param d the date to format.
+	 * @return the date {@code d} formatted as a {@link String} using the format string {@code s}.
+	 * 
+	 * @throws NullPointerException if any of the method parameters is {@code null}.
+	 * @throws IllegalArgumentException if the format string {@code formatString} is an invalid
+	 * one.
+	 */
+	public static String format(final String formatString, final Date d) {
+		GojulPreconditions.checkNotNull(formatString, "formatString is null");
+		GojulPreconditions.checkNotNull(d, "d is null");
+		return format(new GojulDateFormatBuilder(formatString), d);
+	}
+	
+	/**
 	 * Format the date {@code d} using the date format characteristics supplied by {@code builder}.
 	 * 
 	 * @param builder the builder instance used to instanciate the right {@link SimpleDateFormat}
@@ -79,14 +103,15 @@ public class GojulDateFormatter {
 	 * </code>
 	 * </pre>
 	 * 
-	 * @param formatString the format string used to perform the parsing.
+	 * @param formatString the format string used to perform the parsing. See the specification of
+	 * {@link SimpleDateFormat} to check its syntax.
 	 * @param s the date to parse.
 	 * @return the date from {@link String} {@code s} using the date format string
 	 * {@code formatString}, and return the corresponding {@link Date} instance, or
 	 * {@code null} if a parse error occurs.
 	 * 
 	 * @throws NullPointerException if any of the method parameters is {@code null}.
-	 * @throws IllegalArgumentException if the date format supplied by {@code builder} is an invalid
+	 * @throws IllegalArgumentException if the format string {@code formatString} is an invalid
 	 * one.
 	 */
 	public static Date parse(final String formatString, final String s) {
