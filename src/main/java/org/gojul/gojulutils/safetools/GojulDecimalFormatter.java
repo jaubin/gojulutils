@@ -3,6 +3,7 @@ package org.gojul.gojulutils.safetools;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import org.gojul.gojulutils.validation.GojulPreconditions;
 
@@ -66,9 +67,9 @@ public class GojulDecimalFormatter {
 		
 	}
 	
-	private final static ConcurrentHashMap<String, DecimalFormat> DECIMAL_FORMATS_BY_FORMAT = new ConcurrentHashMap<>();
+	private final static ConcurrentMap<String, DecimalFormat> DECIMAL_FORMATS_BY_FORMAT = new ConcurrentHashMap<>();
 	
-	private final static ConcurrentHashMap<DecimalFormatKey, DecimalFormat> DECIMAL_FORMATS_BY_KEY = new ConcurrentHashMap<>();
+	private final static ConcurrentMap<DecimalFormatKey, DecimalFormat> DECIMAL_FORMATS_BY_KEY = new ConcurrentHashMap<>();
 	
 	/**
 	 * Private constructor. Prevents class from being instanciated.
