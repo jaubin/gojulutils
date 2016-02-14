@@ -115,6 +115,8 @@ public class GojulDateFormatBuilder {
 	/**
 	 * Create the resulting {@link DateFormat}.
 	 * @return the resulting {@link DateFormat}.
+	 * 
+	 * @throws IllegalArgumentException if the supplied date format is invalid.
 	 */
 	public SimpleDateFormat build() {
 		SimpleDateFormat result = null;

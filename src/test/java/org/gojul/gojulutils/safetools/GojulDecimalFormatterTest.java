@@ -56,6 +56,8 @@ public class GojulDecimalFormatterTest {
 	@Test
 	public void testFormatDoubleWithSymbols() {
 		assertEquals("01.345", GojulDecimalFormatter.format("00.000", new DecimalFormatSymbols(Locale.ENGLISH), 1.345d));
+		// Test the cache
+		assertEquals("01.345", GojulDecimalFormatter.format("00.000", new DecimalFormatSymbols(Locale.ENGLISH), 1.345d));
 	}
 	
 	@Test(expected = NullPointerException.class)
@@ -70,6 +72,8 @@ public class GojulDecimalFormatterTest {
 	
 	@Test
 	public void testFormatLongWithSymbols() {
+		assertEquals("01345.000", GojulDecimalFormatter.format("00000.000", new DecimalFormatSymbols(Locale.ENGLISH), 1345L));
+		// Test the cache
 		assertEquals("01345.000", GojulDecimalFormatter.format("00000.000", new DecimalFormatSymbols(Locale.ENGLISH), 1345L));
 	}
 }
