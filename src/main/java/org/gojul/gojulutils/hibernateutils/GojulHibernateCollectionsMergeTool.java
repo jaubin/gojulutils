@@ -118,8 +118,17 @@ public class GojulHibernateCollectionsMergeTool<K, E extends GojulHibernateMerge
 	 * otherwise merge will fail with Hibernate complaining that some elements are already present
 	 * in database but not bound to a session.
 	 * </p>
+	 * <p>
+	 * This method returns the keys of the entities which have been removed from {@code entities}. This
+	 * is necessary because the only safe way to actually remove entities from a {@code @OneToMany} mapping
+	 * consists in both removing them from the collection, and then remove them by a DAO call before saving
+	 * the entity which contains the {@code OneToMany} relationship.
+	 * </p>
 	 *  
 	 * @param entities the set of entities to update.
+	 * 
+	 * @return the set of keys of the removed elements from {@code entitiess}. Such a {@link Set} can then be
+	 * directly used in a database {@code delete} call.
 	 * 
 	 * @throws NullPointerException if {@code entities} is {@code null}.
 	 * @throws IllegalArgumentException if {@code entities} contains the {@code null} value.
@@ -127,22 +136,26 @@ public class GojulHibernateCollectionsMergeTool<K, E extends GojulHibernateMerge
 	 * a single key provided by an element of {@code entities}, as this would prevent the merge
 	 * from being done.
 	 */
-	public void mergeEntitiesWithDelete(final Set<E> entities) {
+	public Set<K> mergeEntitiesWithDelete(final Set<E> entities) {
 		GojulPreconditions.checkNotNull(entities, "entities is null");
 		GojulPreconditions.checkAssertion(!entities.contains(null), "entities contains null value");
 		
+		Set<K> keysToRemove = new HashSet<>();
 		Set<K> unprocessedKeys = new HashSet<>(sourceEntitiesByKeys.keySet());
 		for (Iterator<E> it = entities.iterator(); it.hasNext(); ) {
 			E entityToMerge = it.next();
 			E sourceEntity = getSourceEntityAndMarkKeyAsProcessed(entityToMerge, unprocessedKeys);
 			if (sourceEntity == null) {
 				it.remove();
+				keysToRemove.add(keyInstanciator.generateKey(entityToMerge));
 			} else {
 				entityToMerge.mergeEntity(sourceEntity);
 			}
 		}
 		
 		addRemainingEntities(entities, unprocessedKeys);
+		
+		return keysToRemove;
 	}
 	
 	private E getSourceEntityAndMarkKeyAsProcessed(final E entityToMerge, final Set<K> unprocessedKeys) {

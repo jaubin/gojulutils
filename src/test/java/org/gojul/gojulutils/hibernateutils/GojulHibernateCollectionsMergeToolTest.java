@@ -3,6 +3,7 @@ package org.gojul.gojulutils.hibernateutils;
 import static org.junit.Assert.*;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -173,7 +174,7 @@ public class GojulHibernateCollectionsMergeToolTest {
 	public void testMergeEntitiesWithDelete() {
 		Set<DummyEntity> entitiesToMerge = new HashSet<>(Arrays.asList(e1Merge, e2Merge, e3Merge));
 		
-		mergeTool.mergeEntitiesWithDelete(entitiesToMerge);
+		assertEquals(Collections.singleton(3L), mergeTool.mergeEntitiesWithDelete(entitiesToMerge));
 		
 		assertEquals(new HashSet<>(Arrays.asList(e1, e2, e4, e1New, e2New)), entitiesToMerge);
 		
