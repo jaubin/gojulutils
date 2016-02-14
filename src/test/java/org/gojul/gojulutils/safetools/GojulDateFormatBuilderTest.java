@@ -56,7 +56,9 @@ public class GojulDateFormatBuilderTest {
 		
 		assertEquals(expected, expected);
 		assertEquals(expected.getDateFormatSymbols(), symbols);
-		assertEquals(expected.getTimeZone(), actual.getTimeZone());
+		assertNotNull(expected.getTimeZone());
+		assertEquals(expected.getTimeZone().getID(), actual.getTimeZone().getID());
+		assertEquals(expected.toPattern(), actual.toPattern());
 	}
 	
 	@Test
@@ -73,7 +75,9 @@ public class GojulDateFormatBuilderTest {
 		SimpleDateFormat actual = builder.build();
 		
 		assertEquals(expected, builder.build());
-		assertEquals(expected.getTimeZone(), actual.getTimeZone());
+		assertNotNull(expected.getTimeZone());
+		assertEquals(expected.getTimeZone().getID(), actual.getTimeZone().getID());
+		assertEquals(expected.toPattern(), actual.toPattern());
 	}
 
 }
