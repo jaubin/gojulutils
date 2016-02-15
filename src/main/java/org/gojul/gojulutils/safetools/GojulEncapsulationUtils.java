@@ -117,12 +117,13 @@ public class GojulEncapsulationUtils {
 	 *  
 	 * @author julien
 	 *
-	 * @param <T>
+	 * @param <T> the class of the element to copy.
 	 */
 	public static interface GojulCopyFunction<T> {
 		
 		/**
 		 * Perform a deep copy of the object {@code elem} and returns it.
+		 * Note that this method does not need to handle the {@code null} case.
 		 * @param elem the element to copy.
 		 * @return a deep copy of the object {@code elem} and returns it.
 		 */
