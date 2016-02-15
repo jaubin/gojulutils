@@ -62,4 +62,14 @@ public class GojulEncapsulationUtilsTest {
 		assertEquals(d, GojulEncapsulationUtils.copyDate(d));
 		assertNotSame(d, GojulEncapsulationUtils.copyDate(d));
 	}
+	
+	@Test
+	public void testCopyArray() {
+		assertNull(GojulEncapsulationUtils.copyArray(null));
+		assertArrayEquals(new String[0], GojulEncapsulationUtils.copyArray(new String[0]));
+		
+		String[] sample = {"foo", "bar"};
+		assertArrayEquals(sample, GojulEncapsulationUtils.copyArray(sample));
+		assertNotSame(sample, GojulEncapsulationUtils.copyArray(sample));
+	}
 }

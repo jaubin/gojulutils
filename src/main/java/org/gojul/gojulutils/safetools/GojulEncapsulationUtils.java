@@ -1,5 +1,6 @@
 package org.gojul.gojulutils.safetools;
 
+import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -79,6 +80,30 @@ public class GojulEncapsulationUtils {
 	 */
 	public static Date copyDate(final Date d) {
 		return d == null ? null: new Date(d.getTime());
+	}
+	
+	/**
+	 * Copy the array {@code source} to a target array which contains the
+	 * same elements. This method just copies the array itself but does
+	 * not perform deep copy. Note that if {@code source} is empty this method
+	 * returns {@code source} itself as in this case {@code source} is immutable.
+	 * 
+	 * @param source the source objects to clone.
+	 * @return a copy of {@code source}.
+	 */
+	public static <T> T[] copyArray(final T[] source) {
+		if (source == null) {
+			return null;
+		}
+		int len = source.length;
+		// No risk here, an empty array is always immutable...
+		if (len == 0) {
+			return source;
+		}
+		@SuppressWarnings("unchecked")
+		T[] copy = (T[]) Array.newInstance(source[0].getClass(), source.length);
+		System.arraycopy(source, 0, copy, 0, len);
+		return copy;
 	}
 	
 	
