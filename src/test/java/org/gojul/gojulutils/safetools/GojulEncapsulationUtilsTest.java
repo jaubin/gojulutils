@@ -72,4 +72,41 @@ public class GojulEncapsulationUtilsTest {
 		assertArrayEquals(sample, GojulEncapsulationUtils.copyArray(sample));
 		assertNotSame(sample, GojulEncapsulationUtils.copyArray(sample));
 	}
+	
+	@Test(expected = NullPointerException.class)
+	public void testDeepCopyArrayWithNullCopyFunctionThrowsException() {
+		GojulEncapsulationUtils.deepCopyArray(new String[]{"foo", "bar"}, null);
+	}
+	
+	@Test
+	public void testDeepCopyArray() {
+		GojulEncapsulationUtils.GojulCopyFunction<Date> copyFunction = new GojulEncapsulationUtils.GojulCopyFunction<Date>() {
+			
+			@Override
+			public Date copy(Date elem) {
+				return (Date) elem.clone();
+			}
+		};
+		
+		assertNull(GojulEncapsulationUtils.deepCopyArray(null, copyFunction));
+		assertArrayEquals(new Date[0], GojulEncapsulationUtils.deepCopyArray(new Date[0], copyFunction));
+		
+		Date d1 = new Date();
+		Date d2 = new Date(d1.getTime() + 1000L);
+		
+		// We put the null value to ensure the method is safe against null values.
+		Date[] sample = {d1, null, d2};
+		
+		Date[] copy = GojulEncapsulationUtils.deepCopyArray(sample, copyFunction);
+		assertArrayEquals(sample, copy);
+		assertNotSame(sample, copy);
+		
+		for (int i = 0, len = sample.length; i < len; i++) {
+			if (sample[i] == null) {
+				assertNull(copy[i]);
+			} else {
+				assertNotSame(copy[i], sample[i]);
+			}
+		}
+	}
 }

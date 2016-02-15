@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.gojul.gojulutils.validation.GojulPreconditions;
+
 /**
  * Class {@code GojulEncapsulationUtils} contains safe methods to help you
  * encapsulate your object instances by returning copies of objects instead
@@ -85,11 +87,14 @@ public class GojulEncapsulationUtils {
 	/**
 	 * Copy the array {@code source} to a target array which contains the
 	 * same elements. This method just copies the array itself but does
-	 * not perform deep copy. Note that if {@code source} is empty this method
+	 * not perform deep copy, so it is not safe with arrays of mutable
+	 * values. Note that if {@code source} is empty this method
 	 * returns {@code source} itself as in this case {@code source} is immutable.
 	 * 
 	 * @param source the source objects to clone.
 	 * @return a copy of {@code source}.
+	 * 
+	 * @see GojulEncapsulationUtils#deepCopyArray(Cloneable[])
 	 */
 	public static <T> T[] copyArray(final T[] source) {
 		if (source == null) {
@@ -103,6 +108,63 @@ public class GojulEncapsulationUtils {
 		@SuppressWarnings("unchecked")
 		T[] copy = (T[]) Array.newInstance(source[0].getClass(), source.length);
 		System.arraycopy(source, 0, copy, 0, len);
+		return copy;
+	}
+	
+	/**
+	 * Interface {@code GojulCopyFunction} is a functional interface
+	 * which purpose is to have a generic mechanism to perform deep copies.
+	 *  
+	 * @author julien
+	 *
+	 * @param <T>
+	 */
+	public static interface GojulCopyFunction<T> {
+		
+		/**
+		 * Perform a deep copy of the object {@code elem} and returns it.
+		 * @param elem the element to copy.
+		 * @return a deep copy of the object {@code elem} and returns it.
+		 */
+		public T copy(final T elem);
+	}
+	
+	/**
+	 * Perform a deep copy of the array {@code source}, by copying not
+	 * only the array itself but also its values. While this method
+	 * is not as performant as {@link GojulEncapsulationUtils#copyArray(Object[])}
+	 * it is safe for mutable values. 
+	 * 
+	 * @param source the source array to copy.
+	 * @param copyFunction the interface which defines how copies are instanciated.
+	 * 
+	 * @return a copy of {@code source} in which all the object instances are copies
+	 * of the values in {@code source}.
+	 * 
+	 * @throws NullPointerException if {@code copyFunction} is {@code null}.
+	 */
+	public static <T> T[] deepCopyArray(final T[] source, final GojulCopyFunction<T> copyFunction) {
+		GojulPreconditions.checkNotNull(copyFunction, "copyFunction is null");
+		if (source == null) {
+			return null;
+		}
+		int len = source.length;
+		// No risk here, an empty array is always immutable...
+		if (len == 0) {
+			return source;
+		}
+		@SuppressWarnings("unchecked")
+		T[] copy = (T[]) Array.newInstance(source[0].getClass(), source.length);
+		
+		for (int i = 0; i < len; i++) {
+			T elem = source[i];
+			if (elem == null) {
+				copy[i] = null;
+			} else {
+				copy[i] = copyFunction.copy(elem);
+			}
+		}
+		
 		return copy;
 	}
 	
