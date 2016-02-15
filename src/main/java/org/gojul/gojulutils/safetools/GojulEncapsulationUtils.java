@@ -2,6 +2,7 @@ package org.gojul.gojulutils.safetools;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -68,4 +69,17 @@ public class GojulEncapsulationUtils {
 	public static <K, V> Map<K, V> unmodifiableMap(final Map<K, V> m) {
 		return m == null ? null: Collections.unmodifiableMap(m);
 	}
+	
+	/**
+	 * Return a copy of {@code d} if {@code d} is not {@code null},
+	 * {@code null} otherwise.
+	 * @param d the {@link Date} instance to copy.
+	 * @return a copy of {@code d} if {@code d} is not {@code null},
+	 * {@code null} otherwise.
+	 */
+	public static Date copyDate(final Date d) {
+		return d == null ? null: new Date(d.getTime());
+	}
+	
+	
 }

@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -51,5 +52,14 @@ public class GojulEncapsulationUtilsTest {
 		expected.put("hello", "world");
 		assertEquals(expected, GojulEncapsulationUtils.unmodifiableMap(expected));
 		assertNotSame(expected, GojulEncapsulationUtils.unmodifiableMap(expected));
+	}
+	
+	@Test
+	public void testCopyDate() {
+		assertNull(GojulEncapsulationUtils.copyDate(null));
+		
+		Date d = new Date();
+		assertEquals(d, GojulEncapsulationUtils.copyDate(d));
+		assertNotSame(d, GojulEncapsulationUtils.copyDate(d));
 	}
 }
