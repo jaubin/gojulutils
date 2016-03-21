@@ -94,7 +94,7 @@ public class GojulEncapsulationUtils {
 	 * @param source the source objects to clone.
 	 * @return a copy of {@code source}.
 	 * 
-	 * @see GojulEncapsulationUtils#deepCopyArray(Cloneable[])
+	 * @see GojulEncapsulationUtils#deepCopyArray(Object[], GojulCopyFunction)
 	 */
 	public static <T> T[] copyArray(final T[] source) {
 		if (source == null) {
