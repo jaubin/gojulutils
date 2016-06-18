@@ -22,7 +22,6 @@ public class GojulValidationException extends RuntimeException {
 	 * @throws NullPointerException if {@code msgContainer} is {@code null}.
 	 */
 	public GojulValidationException(final GojulValidationErrorMessageContainer<?, ?> msgContainer) {
-		super();
 		Objects.requireNonNull(msgContainer, "msgContainer is null");
 		this.errorMessageContainer = msgContainer;
 	}
