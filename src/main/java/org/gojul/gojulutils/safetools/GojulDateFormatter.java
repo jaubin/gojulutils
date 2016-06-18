@@ -33,12 +33,9 @@ public class GojulDateFormatter {
 
 	private final static ConcurrentMap<GojulDateFormatKey, SimpleDateFormat> DATE_FORMATS_BY_KEY = new ConcurrentHashMap<>();
 	
-	/**
-	 * Private constructor. Prevents class
-	 * from being instanciated.
-	 */
 	private GojulDateFormatter() {
-		
+		// Private constructor. Prevents class from
+		// being instanciated from the outside.
 	}
 	
 	/**

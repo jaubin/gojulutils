@@ -10,11 +10,9 @@ package org.gojul.gojulutils.safetools;
  */
 public class GojulUnboxingUtils {
 	
-	/**
-	 * Private constructor. Prevents the class from being instanciated.
-	 */
 	private GojulUnboxingUtils() {
-		
+		// Private constructor. Prevents class from
+		// being instanciated from the outside.
 	}
 	
 	/**

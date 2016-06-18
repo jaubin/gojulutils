@@ -15,12 +15,10 @@ public class GojulPreconditions {
 
 	private final static Logger log = LoggerFactory.getLogger(GojulPreconditions.class);
 	
-	/**
-	 * Private constructor. Prevents class from
-	 * being instanciated from the outside.
-	 */
+	
 	private GojulPreconditions() {
-		
+		// Private constructor. Prevents class from
+		// being instanciated from the outside.
 	}
 	
 	/**

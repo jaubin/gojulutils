@@ -70,10 +70,10 @@ public class GojulDecimalFormatter {
 	
 	private final static ConcurrentMap<DecimalFormatKey, DecimalFormat> DECIMAL_FORMATS_BY_KEY = new ConcurrentHashMap<>();
 	
-	/**
-	 * Private constructor. Prevents class from being instanciated.
-	 */
-	private GojulDecimalFormatter() {}
+	private GojulDecimalFormatter() {
+		// Private constructor. Prevents class from
+		// being instanciated from the outside.
+	}
 	
 	/**
 	 * Format value {@code d} using format {@code format}.

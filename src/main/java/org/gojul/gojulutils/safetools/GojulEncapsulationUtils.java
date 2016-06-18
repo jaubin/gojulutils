@@ -20,12 +20,9 @@ import java.util.Set;
  */
 public class GojulEncapsulationUtils {
 
-	/**
-	 * Private constructor. Prevents class
-	 * from being instanciated.
-	 */
 	private GojulEncapsulationUtils() {
-		
+		// Private constructor. Prevents class from
+		// being instanciated from the outside.
 	}
 	
 	/**
