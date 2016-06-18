@@ -61,7 +61,7 @@ public class GojulValidationErrorMessageContainer<K extends Serializable, V exte
 	}
 	
 	@XmlElement
-	private List<GojulValidationErrorMessage<K, V>> errorMessages;
+	private final List<GojulValidationErrorMessage<K, V>> errorMessages;
 	
 	/**
 	 * Constructor.
