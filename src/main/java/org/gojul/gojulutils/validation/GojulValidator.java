@@ -22,25 +22,24 @@ import java.io.Serializable;
  * your validation objects with database, and perhaps not really efficient. This one is very easy to integrate with frameworks
  * like Spring.
  * </p>
- * 
- * @author julien
  *
  * @param <E> the type of elements to validate.
  * @param <K> the key of the message, which identifies the element of the user interface that is
- * intended to be targeted by the error message. This object should be immutable.
+ *            intended to be targeted by the error message. This object should be immutable.
  * @param <V> the message itself to display. This object should be immutable.
- * 
+ * @author julien
  * @see org.gojul.gojulutils.validation.GojulValidatorComposite
  * @see org.gojul.gojulutils.validation.GojulValidationErrorMessage
  */
 public interface GojulValidator<E, K extends Serializable, V extends Serializable> {
-	
-	/**
-	 * Validate the element {@code element}. If {@code element} does not satisfy the business rule then log an
-	 * error into {@code errorMsgContainer}.
-	 * @param element the element to validate.
-	 * @param errorMsgContainer the error message container used to store error messages.
-	 */
-	public void validate(final E element, final GojulValidationErrorMessageContainer<K, V> errorMsgContainer);
-	
+
+    /**
+     * Validate the element {@code element}. If {@code element} does not satisfy the business rule then log an
+     * error into {@code errorMsgContainer}.
+     *
+     * @param element           the element to validate.
+     * @param errorMsgContainer the error message container used to store error messages.
+     */
+    void validate(final E element, final GojulValidationErrorMessageContainer<K, V> errorMsgContainer);
+
 }
