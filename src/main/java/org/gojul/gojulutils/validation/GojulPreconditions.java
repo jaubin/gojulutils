@@ -22,7 +22,7 @@ public class GojulPreconditions {
 	}
 	
 	/**
-	 * Test if the assertion {@code assertion} is successful. If this is not the case, log an error with
+	 * Check if the assertion {@code assertion} is successful. If this is not the case, log an error with
 	 * message {@code message} and raise a {@link IllegalArgumentException}. This is very similar to the
 	 * assert keyword from Java except that it does not need to be enabled from the Java command line.
 	 * 
