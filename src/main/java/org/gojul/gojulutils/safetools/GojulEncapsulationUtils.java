@@ -6,9 +6,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
-
-import org.gojul.gojulutils.validation.GojulPreconditions;
 
 /**
  * Class {@code GojulEncapsulationUtils} contains safe methods to help you
@@ -145,7 +144,7 @@ public class GojulEncapsulationUtils {
 	 * @throws NullPointerException if {@code copyFunction} is {@code null}.
 	 */
 	public static <T> T[] deepCopyArray(final T[] source, final GojulCopyFunction<T> copyFunction) {
-		GojulPreconditions.checkNotNull(copyFunction, "copyFunction is null");
+		Objects.requireNonNull(copyFunction, "copyFunction is null");
 		if (source == null) {
 			return null;
 		}

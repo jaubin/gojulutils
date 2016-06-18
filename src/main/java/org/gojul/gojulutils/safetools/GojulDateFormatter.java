@@ -3,6 +3,7 @@ package org.gojul.gojulutils.safetools;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -59,8 +60,8 @@ public class GojulDateFormatter {
 	 * one.
 	 */
 	public static String format(final String formatString, final Date d) {
-		GojulPreconditions.checkNotNull(formatString, "formatString is null");
-		GojulPreconditions.checkNotNull(d, "d is null");
+		Objects.requireNonNull(formatString, "formatString is null");
+		Objects.requireNonNull(d, "d is null");
 		return format(new GojulDateFormatBuilder(formatString), d);
 	}
 	
@@ -78,8 +79,8 @@ public class GojulDateFormatter {
 	 * one.
 	 */
 	public static String format(final GojulDateFormatBuilder builder, final Date d) {
-		GojulPreconditions.checkNotNull(builder, "builder is null");
-		GojulPreconditions.checkNotNull(d, "d is null");
+		Objects.requireNonNull(builder, "builder is null");
+		Objects.requireNonNull(d, "d is null");
 		SimpleDateFormat sdf = getOrCreateDateFormat(builder);
 		synchronized(sdf) {
 			return sdf.format(d);
@@ -115,8 +116,8 @@ public class GojulDateFormatter {
 	 * one.
 	 */
 	public static Date parse(final String formatString, final String s) {
-		GojulPreconditions.checkNotNull(formatString, "formatString is null");
-		GojulPreconditions.checkNotNull(s, "s is null");
+		Objects.requireNonNull(formatString, "formatString is null");
+		Objects.requireNonNull(s, "s is null");
 		return parse(new GojulDateFormatBuilder(formatString), s);
 	}
 	
@@ -140,8 +141,8 @@ public class GojulDateFormatter {
 	 * one.
 	 */
 	public static Date parse(final GojulDateFormatBuilder builder, final String s) {
-		GojulPreconditions.checkNotNull(builder, "builder is null");
-		GojulPreconditions.checkNotNull(s, "s is null");
+		Objects.requireNonNull(builder, "builder is null");
+		Objects.requireNonNull(s, "s is null");
 		SimpleDateFormat sdf = getOrCreateDateFormat(builder);
 		synchronized(sdf) {
 			try {

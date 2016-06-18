@@ -3,6 +3,7 @@ package org.gojul.gojulutils.validation;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Class {@code GojulValidatorComposite} is an implementation of the GoF composite pattern which
@@ -28,7 +29,7 @@ public class GojulValidatorComposite<E, K extends Serializable, V extends Serial
 	 * @throws NullPointerException if {@code validators} is {@code null}.
 	 */
 	public GojulValidatorComposite(final List<GojulValidator<E, K, V>> validators) {
-		GojulPreconditions.checkNotNull(validators, "validators is null");
+		Objects.requireNonNull(validators, "validators is null");
 		this.validators = new ArrayList<>(validators);
 	}
 	
@@ -43,8 +44,8 @@ public class GojulValidatorComposite<E, K extends Serializable, V extends Serial
 	 */
 	@Override
 	public void validate(E element, GojulValidationErrorMessageContainer<K, V> errorMsgContainer) {
-		GojulPreconditions.checkNotNull(element, "element is null");
-		GojulPreconditions.checkNotNull(errorMsgContainer, "errorMsgContainer is null");
+		Objects.requireNonNull(element, "element is null");
+		Objects.requireNonNull(errorMsgContainer, "errorMsgContainer is null");
 		
 		for (GojulValidator<E, K, V> validator: validators) {
 			validator.validate(element, errorMsgContainer);

@@ -2,10 +2,9 @@ package org.gojul.gojulutils.safetools;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-
-import org.gojul.gojulutils.validation.GojulPreconditions;
 
 /**
  * <p>
@@ -85,7 +84,7 @@ public class GojulDecimalFormatter {
 	 * @throws NullPointerException if {@code format} is {@code null}.
 	 */
 	public static String format(final String format, final double d) {
-		GojulPreconditions.checkNotNull(format, "format is null");
+		Objects.requireNonNull(format, "format is null");
 		DecimalFormat df = retrieveFromFormat(format);
 		// It's not a big issue here to use synchronized block because the
 		// JVM has been highly optimized to handle this.
@@ -103,7 +102,7 @@ public class GojulDecimalFormatter {
 	 * @throws NullPointerException if {@code format} is {@code null}.
 	 */
 	public static String format(final String format, final long l) {
-		GojulPreconditions.checkNotNull(format, "format is null");
+		Objects.requireNonNull(format, "format is null");
 		DecimalFormat df = retrieveFromFormat(format);
 		// It's not a big issue here to use synchronized block because the
 		// JVM has been highly optimized to handle this.
@@ -132,8 +131,8 @@ public class GojulDecimalFormatter {
 	 * @throws NullPointerException if {@code format} or {@code symbols} is {@code null}.
 	 */
 	public static String format(final String format, final DecimalFormatSymbols symbols, final double d) {
-		GojulPreconditions.checkNotNull(format, "format is null");
-		GojulPreconditions.checkNotNull(symbols, "symbols is null");
+		Objects.requireNonNull(format, "format is null");
+		Objects.requireNonNull(symbols, "symbols is null");
 		DecimalFormat df = retrieveFromKey(format, symbols);
 		// It's not a big issue here to use synchronized block because the
 		// JVM has been highly optimized to handle this.
@@ -152,8 +151,8 @@ public class GojulDecimalFormatter {
 	 * @throws NullPointerException if {@code format} or {@code symbols} is {@code null}.
 	 */
 	public static String format(final String format, final DecimalFormatSymbols symbols, final long l) {
-		GojulPreconditions.checkNotNull(format, "format is null");
-		GojulPreconditions.checkNotNull(symbols, "symbols is null");
+		Objects.requireNonNull(format, "format is null");
+		Objects.requireNonNull(symbols, "symbols is null");
 		DecimalFormat df = retrieveFromKey(format, symbols);
 		// It's not a big issue here to use synchronized block because the
 		// JVM has been highly optimized to handle this.

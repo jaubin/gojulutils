@@ -5,9 +5,8 @@ import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TimeZone;
-
-import org.gojul.gojulutils.validation.GojulPreconditions;
 
 /**
  * Class {@code GojulDateFormatBuilder} builds {@link DateFormat} instances. This class
@@ -32,7 +31,7 @@ public class GojulDateFormatBuilder {
 	 * @throws NullPointerException if {@code format} is {@code null}.
 	 */
 	public GojulDateFormatBuilder(final String format) {
-		GojulPreconditions.checkNotNull(format, "format is null");
+		Objects.requireNonNull(format, "format is null");
 		this.format = format;
 	}
 	

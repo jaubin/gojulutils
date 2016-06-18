@@ -24,22 +24,6 @@ public class GojulPreconditions {
 	}
 	
 	/**
-	 * Test if {@code obj} is null. If this is the case, log an error with message {@code message}
-	 * and raise a {@link NullPointerException}.
-	 * 
-	 * @param obj the {@link Object} to test.
-	 * @param message the message to display if {@code obj} is {@code null}.
-	 * 
-	 * @throws NullPointerException if {@code obj} is {@code null}.
-	 */
-	public static void checkNotNull(final Object obj, final String message) {
-		if (obj == null) {
-			log.error(message);
-			throw new NullPointerException(message);
-		}
-	}
-	
-	/**
 	 * Test if the assertion {@code assertion} is successful. If this is not the case, log an error with
 	 * message {@code message} and raise a {@link IllegalArgumentException}. This is very similar to the
 	 * assert keyword from Java except that it does not need to be enabled from the Java command line.

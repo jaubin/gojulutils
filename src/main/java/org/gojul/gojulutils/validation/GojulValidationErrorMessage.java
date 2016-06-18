@@ -1,6 +1,7 @@
 package org.gojul.gojulutils.validation;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -45,8 +46,8 @@ public class GojulValidationErrorMessage<K extends Serializable, V extends Seria
 	 * @throws NullPointerException if any of the method parameters is {@code null}.
 	 */
 	public GojulValidationErrorMessage(final K uiTarget, final V message) {
-		GojulPreconditions.checkNotNull(uiTarget, "uiTarget is null");
-		GojulPreconditions.checkNotNull(message, "message is null");
+		Objects.requireNonNull(uiTarget, "uiTarget is null");
+		Objects.requireNonNull(message, "message is null");
 		this.uiTarget = uiTarget;
 		this.message = message;
 	}

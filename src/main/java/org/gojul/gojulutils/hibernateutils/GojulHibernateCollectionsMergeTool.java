@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.gojul.gojulutils.validation.GojulPreconditions;
@@ -51,8 +52,8 @@ public class GojulHibernateCollectionsMergeTool<K, E extends GojulHibernateMerge
 	 */
 	public GojulHibernateCollectionsMergeTool(final GojulHibernateKeyInstanciator<K, E> keyInstanciator, 
 			final Set<E> sourceEntities) {
-		GojulPreconditions.checkNotNull(keyInstanciator, "keyInstanciator is null");
-		GojulPreconditions.checkNotNull(sourceEntities, "sourceEntities is null");
+		Objects.requireNonNull(keyInstanciator, "keyInstanciator is null");
+		Objects.requireNonNull(sourceEntities, "sourceEntities is null");
 		GojulPreconditions.checkAssertion(!sourceEntities.contains(null), "sourceEntities contains null value while forbidden");
 		this.keyInstanciator = keyInstanciator;
 		this.sourceEntitiesByKeys = new HashMap<>();
@@ -91,7 +92,7 @@ public class GojulHibernateCollectionsMergeTool<K, E extends GojulHibernateMerge
 	 * from being done.
 	 */
 	public void mergeEntitiesWithoutDelete(final Set<E> entities) {
-		GojulPreconditions.checkNotNull(entities, "entities is null");
+		Objects.requireNonNull(entities, "entities is null");
 		GojulPreconditions.checkAssertion(!entities.contains(null), "entities contains null value");
 		
 		Set<K> unprocessedKeys = new HashSet<>(sourceEntitiesByKeys.keySet());
@@ -137,7 +138,7 @@ public class GojulHibernateCollectionsMergeTool<K, E extends GojulHibernateMerge
 	 * from being done.
 	 */
 	public Set<K> mergeEntitiesWithDelete(final Set<E> entities) {
-		GojulPreconditions.checkNotNull(entities, "entities is null");
+		Objects.requireNonNull(entities, "entities is null");
 		GojulPreconditions.checkAssertion(!entities.contains(null), "entities contains null value");
 		
 		Set<K> keysToRemove = new HashSet<>();

@@ -1,5 +1,7 @@
 package org.gojul.gojulutils.validation;
 
+import java.util.Objects;
+
 /**
  * Exception {@code GojulValidationException} is thrown when a {@link GojulValidationErrorMessageContainer}
  * instance contains error. Such an exception allows easily catch when used with an UI or web services.
@@ -21,7 +23,7 @@ public class GojulValidationException extends RuntimeException {
 	 */
 	public GojulValidationException(final GojulValidationErrorMessageContainer<?, ?> msgContainer) {
 		super();
-		GojulPreconditions.checkNotNull(msgContainer, "msgContainer is null");
+		Objects.requireNonNull(msgContainer, "msgContainer is null");
 		this.errorMessageContainer = msgContainer;
 	}
 	
@@ -35,7 +37,7 @@ public class GojulValidationException extends RuntimeException {
 	 */
 	public GojulValidationException(final String msg, final GojulValidationErrorMessageContainer<?, ?> msgContainer) {
 		super(msg);
-		GojulPreconditions.checkNotNull(msgContainer, "msgContainer is null");
+		Objects.requireNonNull(msgContainer, "msgContainer is null");
 		this.errorMessageContainer = msgContainer;
 	}
 	
@@ -64,7 +66,7 @@ public class GojulValidationException extends RuntimeException {
 	 * @throws NullPointerException if {@code errorMsgContainer} is {@code null}.
 	 */
 	public static void checkMessageContainerForErrors(final GojulValidationErrorMessageContainer<?, ?> errorMsgContainer) {
-		GojulPreconditions.checkNotNull(errorMsgContainer, "errorMsgContainer is null");
+		Objects.requireNonNull(errorMsgContainer, "errorMsgContainer is null");
 		if (errorMsgContainer.hasErrors()) {
 			throw new GojulValidationException("Validation failed", errorMsgContainer);
 		}

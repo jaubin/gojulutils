@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -77,7 +78,7 @@ public class GojulValidationErrorMessageContainer<K extends Serializable, V exte
 	 * @throws NullPointerException if {@code msg} is {@code null}.
 	 */
 	public void addError(final GojulValidationErrorMessage<K, V> msg) {
-		GojulPreconditions.checkNotNull(msg, "msg is null");
+		Objects.requireNonNull(msg, "msg is null");
 		this.errorMessages.add(msg);
 	}
 	
@@ -93,7 +94,7 @@ public class GojulValidationErrorMessageContainer<K extends Serializable, V exte
 	 * @see GojulValidationErrorMessageContainer#addError(boolean, GojulValidationErrorMessageInstanciator)
 	 */
 	public void addError(final boolean assertion, final GojulValidationErrorMessage<K, V> msg) {
-		GojulPreconditions.checkNotNull(msg, "msg is null");
+		Objects.requireNonNull(msg, "msg is null");
 		if (!assertion) {
 			this.errorMessages.add(msg);
 		}
@@ -110,7 +111,7 @@ public class GojulValidationErrorMessageContainer<K extends Serializable, V exte
 	 * @throws IllegalArgumentException if {@code instanciator} returns a {@code null} value.
 	 */
 	public void addError(final boolean assertion, final GojulValidationErrorMessageInstanciator<K, V> instanciator) {
-		GojulPreconditions.checkNotNull(instanciator, "instanciator is null");
+		Objects.requireNonNull(instanciator, "instanciator is null");
 		if (!assertion) {
 			GojulValidationErrorMessage<K, V> msg = instanciator.instanciateErrorMessage();
 			GojulPreconditions.checkAssertion(msg != null, "Trying to create a null error message !");
