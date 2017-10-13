@@ -1,7 +1,7 @@
 package org.gojul.gojulutils.data;
 
 /**
- * Class {@code Pair} is a simple stupid pair class. This class is notably necessary
+ * Class {@code GojulPair} is a simple stupid pair class. This class is notably necessary
  * when emulating JOIN in database and such a class does not exist natively in the JDK.
  * This object is immutable as long as the object it contains are immutable. Since
  * this object is not serializable it should not be stored in objects which could be serialized,
@@ -12,7 +12,7 @@ package org.gojul.gojulutils.data;
  * @param <S> the type of the first object of the pair.
  * @param <T> the type of the second object of the pair.
  */
-public final class Pair<S, T> {
+public final class GojulPair<S, T> {
 
     private final S first;
     private final T second;
@@ -24,7 +24,7 @@ public final class Pair<S, T> {
      * @param first the first object.
      * @param second the second object.
      */
-    public Pair(final S first, final T second) {
+    public GojulPair(final S first, final T second) {
         this.first = first;
         this.second = second;
     }
@@ -53,7 +53,7 @@ public final class Pair<S, T> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Pair<?, ?> pair = (Pair<?, ?>) o;
+        GojulPair<?, ?> pair = (GojulPair<?, ?>) o;
 
         if (getFirst() != null ? !getFirst().equals(pair.getFirst()) : pair.getFirst() != null) return false;
         return getSecond() != null ? getSecond().equals(pair.getSecond()) : pair.getSecond() == null;
@@ -74,7 +74,7 @@ public final class Pair<S, T> {
      */
     @Override
     public String toString() {
-        return "Pair{" +
+        return "GojulPair{" +
                 "first=" + first +
                 ", second=" + second +
                 '}';
