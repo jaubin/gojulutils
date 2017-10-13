@@ -10,6 +10,7 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
@@ -22,7 +23,7 @@
 
         <!-- Users may not want to use JAXB marshalling with the library. -->
         <dependency>
-            <groupId>javax.xml</groupId>
+            <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
             <version>2.1</version>
             <scope>compile</scope>
