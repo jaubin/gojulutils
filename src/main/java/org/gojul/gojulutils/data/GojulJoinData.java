@@ -70,8 +70,8 @@ public class GojulJoinData<K, S, T> {
 
     private <V> Map<K, List<V>> buildElementsMapPerKey(final GojulJoinDataKey<K, V> keyGen, final Iterable<V> data) {
         // Here we cannot simply use a groupingBy as groupingBy does not accept null keys.
-
-        Map<K, List<V>> result = new HashMap<>();
+        // Thus we use a LinkedHashMap to make it easier to write unit tests later on.
+        Map<K, List<V>> result = new LinkedHashMap<>();
 
         for (V elem: data) {
             K key = keyGen.getKey(elem);
@@ -107,7 +107,7 @@ public class GojulJoinData<K, S, T> {
     }
 
     private <V> Map<K, List<V>> deepUnmodifiableMap(final Map<K, List<V>> map) {
-        Map<K, List<V>> result = new HashMap<>();
+        Map<K, List<V>> result = new LinkedHashMap<>();
 
         for (Map.Entry<K, List<V>> entry: map.entrySet()) {
             result.put(entry.getKey(), Collections.unmodifiableList(entry.getValue()));
