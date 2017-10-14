@@ -73,7 +73,7 @@ public class GojulJoinDataService {
 
         for (S element: elements) {
             if (targetElements == null) {
-                result.add(new GojulPair<>(element, null));
+                result.add(new GojulPair<>(element, (T) null));
             } else {
                 for (T targetElement: targetElements) {
                     result.add(new GojulPair<>(element, targetElement));
