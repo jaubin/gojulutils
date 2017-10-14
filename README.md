@@ -6,7 +6,8 @@ This library will be filled over time with new content from the recurring code I
 
 ## Contents
 
-* data : contains various utilities in order to emulate JOIN operations so that stored procedures could be written more easily.
+* data : contains various utilities in order to emulate JOIN operations so that stored procedures could be written more easily. This is
+especially useful when you have to run algorithms on a datasource made of CSV-like files.
 
 * hibernateutils : contains various hibernate utilities notably a merge tool that can be very useful in order to merge collections.
 

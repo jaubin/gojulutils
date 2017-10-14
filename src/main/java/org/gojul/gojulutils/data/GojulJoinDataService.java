@@ -7,11 +7,22 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
+ * <p>
  * Class {@code GojulJoinDataService} is a service which
  * has for purpose to emulate JOIN operations. In case you're
  * using Spring you should simply wrap this service within
  * a decorator (or something else) with the proper service
  * annotation to integrate it directly within your beans.
+ * </p>
+ * <p>The goal here is to help avoiding using the database
+ * notably when running algorithms on CSV files which behave
+ * as a read-only database. It can be extremely efficient because
+ * database imports tend to be quite costly, and then data queries
+ * are even more. However these algorithms are not suited for very
+ * huge amounts of data, because of memory constraints. It is safe
+ * to consider they're fine for joinings for files which have a size
+ * up to roughly 100k lines.</p>
+ *
  *
  * @author julien
  */
