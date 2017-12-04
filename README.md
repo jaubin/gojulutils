@@ -6,6 +6,9 @@ This library will be filled over time with new content from the recurring code I
 
 ## Contents
 
+* data : contains various utilities in order to emulate JOIN operations so that stored procedures could be written more easily. This is
+especially useful when you have to run algorithms on a datasource made of CSV-like files.
+
 * hibernateutils : contains various hibernate utilities notably a merge tool that can be very useful in order to merge collections.
 
 * validation : a small validation library which contains several handy utilities which simplify writing user input validation stuff.
@@ -15,3 +18,5 @@ This library will be filled over time with new content from the recurring code I
 # Remarks
 
 * All classes in this project have their name prefixed with Gojul. The goal is not to put a trademark, but instead to avoid naming collisions with the rest of your project libraries (and even your project classes).
+
+* Project requires Java 8+ to compile. This should not be a problem as Java 7 is no longer supported.
