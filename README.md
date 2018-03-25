@@ -13,6 +13,8 @@ especially useful when you have to run algorithms on a datasource made of CSV-li
 
 * validation : a small validation library which contains several handy utilities which simplify writing user input validation stuff.
 
+* filter : a composite implementation for the filter pattern. The goal is to make it simple to split your filter rules and make them easy to test.
+
 * safetools : a collection of tools which solve some safety issues with the standard Java library such as unboxing and so on.
 
 # Remarks
