@@ -163,7 +163,7 @@ public class GojulDecimalFormatter {
 	
 	private static DecimalFormat retrieveFromKey(final String format, final DecimalFormatSymbols symbols) {
 		DecimalFormatKey key = new DecimalFormatKey(format, symbols);
-		DecimalFormat df = DECIMAL_FORMATS_BY_KEY.get(symbols);
+		DecimalFormat df = DECIMAL_FORMATS_BY_KEY.get(key);
 		if (df == null) {
 			df = new DecimalFormat(format, symbols);
 			DecimalFormat cached = DECIMAL_FORMATS_BY_KEY.putIfAbsent(key, df);
