@@ -18,38 +18,38 @@ import java.util.Objects;
  * @param <V> the message itself to display. This object should be immutable.
  */
 public class GojulValidatorComposite<E, K extends Serializable, V extends Serializable> 
-	implements GojulValidator<E, K, V> {
+    implements GojulValidator<E, K, V> {
 
-	private final List<GojulValidator<E, K, V>> validators;
-	
-	/**
-	 * Constructor.
-	 * @param validators the validators used by this object.
-	 * 
-	 * @throws NullPointerException if {@code validators} is {@code null}.
-	 */
-	public GojulValidatorComposite(final List<GojulValidator<E, K, V>> validators) {
-		Objects.requireNonNull(validators, "validators is null");
-		this.validators = new ArrayList<>(validators);
-	}
-	
-	/**
-	 * Perform the actual validation. Note that unlike what is specified in the GojulValidator interface
-	 * this method performs nullity checks on parameters.
-	 * 
-	 * @param element the element to validate.
-	 * @param errorMsgContainer the error message container to populate.
-	 * 
-	 * @see org.gojul.gojulutils.validation.GojulValidator#validate(Object, GojulValidationErrorMessageContainer)
-	 */
-	@Override
-	public void validate(E element, GojulValidationErrorMessageContainer<K, V> errorMsgContainer) {
-		Objects.requireNonNull(element, "element is null");
-		Objects.requireNonNull(errorMsgContainer, "errorMsgContainer is null");
-		
-		for (GojulValidator<E, K, V> validator: validators) {
-			validator.validate(element, errorMsgContainer);
-		}
-	}
+    private final List<GojulValidator<E, K, V>> validators;
+    
+    /**
+     * Constructor.
+     * @param validators the validators used by this object.
+     * 
+     * @throws NullPointerException if {@code validators} is {@code null}.
+     */
+    public GojulValidatorComposite(final List<GojulValidator<E, K, V>> validators) {
+        Objects.requireNonNull(validators, "validators is null");
+        this.validators = new ArrayList<>(validators);
+    }
+    
+    /**
+     * Perform the actual validation. Note that unlike what is specified in the GojulValidator interface
+     * this method performs nullity checks on parameters.
+     * 
+     * @param element the element to validate.
+     * @param errorMsgContainer the error message container to populate.
+     * 
+     * @see org.gojul.gojulutils.validation.GojulValidator#validate(Object, GojulValidationErrorMessageContainer)
+     */
+    @Override
+    public void validate(E element, GojulValidationErrorMessageContainer<K, V> errorMsgContainer) {
+        Objects.requireNonNull(element, "element is null");
+        Objects.requireNonNull(errorMsgContainer, "errorMsgContainer is null");
+        
+        for (GojulValidator<E, K, V> validator: validators) {
+            validator.validate(element, errorMsgContainer);
+        }
+    }
 
 }
