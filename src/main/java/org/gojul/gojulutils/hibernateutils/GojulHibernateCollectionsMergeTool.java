@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * @param <K> the type of the key of elements. This should be the type of the element primary keys. 
  * @param <E> the type of elements to merge.
  * 
- * @see org.gojul.gojulutils.GojulHibernateKeyInstanciator
+ * @see org.gojul.gojulutils.hibernateutils.GojulHibernateKeyInstanciator
  */
 public class GojulHibernateCollectionsMergeTool<K, E extends GojulHibernateMergeable<E>> {
     

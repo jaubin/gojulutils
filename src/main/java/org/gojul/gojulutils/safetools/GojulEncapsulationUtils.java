@@ -29,10 +29,9 @@ public class GojulEncapsulationUtils {
      * Return an unmodifiable {@link List} around {@code l},
      * or {@code null} if {@code l} is {@code null}.
      * @param l the {@link List} to wrap.
+     * @param <T> the type of objects of the collection.
      * @return n unmodifiable {@link List} around {@code l},
      * or {@code null} if {@code l} is {@code null}.
-     *
-     * @param <T> the type of objects of the collection.
      */
     public static <T> List<T> unmodifiableList(final List<T> l) {
         return l == null ? null: Collections.unmodifiableList(l);
@@ -42,10 +41,11 @@ public class GojulEncapsulationUtils {
      * Return an unmodifiable {@link Set} around {@code s},
      * or {@code null} if {@code s} is {@code null}.
      * @param s the {@link Set} to wrap.
+     * @param <T> the type of objects of the collection.
      * @return an unmodifiable {@link Set} around {@code s},
      * or {@code null} if {@code s} is {@code null}.
      *
-     * @param <T> the type of objects of the collection.
+
      */
     public static <T> Set<T> unmodifiableSet(final Set<T> s) {
         return s == null ? null: Collections.unmodifiableSet(s);
@@ -55,10 +55,9 @@ public class GojulEncapsulationUtils {
      * Return an unmodifiable {@link Collection} around {@code c},
      * or {@code null} if {@code c} is {@code null}.
      * @param c the {@link Collection} to wrap.
+     * @param <T> the type of objects of the collection.     
      * @return an unmodifiable {@link Collection} around {@code c},
      * or {@code null} if {@code c} is {@code null}.
-     *
-     * @param <T> the type of objects of the collection.
      */
     public static <T> Collection<T> unmodifiableCollection(final Collection<T> c) {
         return c == null ? null: Collections.unmodifiableCollection(c);
@@ -68,11 +67,10 @@ public class GojulEncapsulationUtils {
      * Return an unmodifiable {@link Map} around {@code m},
      * or a {@code null} if {@code m} is {@code null}.
      * @param m the {@link Map} to wrap.
-     * @return an unmodifiable {@link Map} around {@code m},
-     * or a {@code null} if {@code m} is {@code null}.
-     *
      * @param <K> the type of the Map keys.
      * @param <V> the type of the Map values.
+     * @return an unmodifiable {@link Map} around {@code m},
+     * or a {@code null} if {@code m} is {@code null}.
      */
     public static <K, V> Map<K, V> unmodifiableMap(final Map<K, V> m) {
         return m == null ? null: Collections.unmodifiableMap(m);
@@ -97,6 +95,7 @@ public class GojulEncapsulationUtils {
      * returns {@code source} itself as in this case {@code source} is immutable.
      * 
      * @param source the source objects to clone.
+     * @param <T> the type of elements of the array.
      * @return a copy of {@code source}.
      * 
      * @see GojulEncapsulationUtils#deepCopyArray(Object[], GojulCopyFunction)

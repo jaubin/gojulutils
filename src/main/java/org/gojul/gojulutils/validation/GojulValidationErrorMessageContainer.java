@@ -15,6 +15,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * <p>
  * Class {@code GojulValidationErrorMessageContainer} contains instances of {@link GojulValidationErrorMessage}.
  * The goal of this class is to avoid error checking idioms like the following one :
+ * </p>
  * <pre>
  * <code>
  * if (conditionFailed) {
@@ -22,7 +23,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  * }
  * </code>
  * </pre>
- * </p>
  * <p>
  * Using this class you can directly perform your assertions and add errors in a declarative way, which makes your
  * code much more readable and much easier to test.
