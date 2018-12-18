@@ -13,28 +13,28 @@ import org.slf4j.LoggerFactory;
  */
 public class GojulPreconditions {
 
-	private final static Logger log = LoggerFactory.getLogger(GojulPreconditions.class);
-	
-	
-	private GojulPreconditions() {
-		// Private constructor. Prevents class from
-		// being instanciated from the outside.
-	}
-	
-	/**
-	 * Check if the assertion {@code assertion} is successful. If this is not the case, log an error with
-	 * message {@code message} and raise a {@link IllegalArgumentException}. This is very similar to the
-	 * assert keyword from Java except that it does not need to be enabled from the Java command line.
-	 * 
-	 * @param assertion the assertion to test.
-	 * @param message the message to log if {@code assertion} is {@code false}.
-	 * 
-	 * @throws IllegalArgumentException if {@code assertion} is {@code false}.
-	 */
-	public static void checkAssertion(final boolean assertion, final String message) {
-		if (!assertion) {
-			log.error(message);
-			throw new IllegalArgumentException(message);
-		}
-	}
+    private final static Logger log = LoggerFactory.getLogger(GojulPreconditions.class);
+    
+    
+    private GojulPreconditions() {
+        // Private constructor. Prevents class from
+        // being instanciated from the outside.
+    }
+    
+    /**
+     * Check if the assertion {@code assertion} is successful. If this is not the case, log an error with
+     * message {@code message} and raise a {@link IllegalArgumentException}. This is very similar to the
+     * assert keyword from Java except that it does not need to be enabled from the Java command line.
+     * 
+     * @param assertion the assertion to test.
+     * @param message the message to log if {@code assertion} is {@code false}.
+     * 
+     * @throws IllegalArgumentException if {@code assertion} is {@code false}.
+     */
+    public static void checkAssertion(final boolean assertion, final String message) {
+        if (!assertion) {
+            log.error(message);
+            throw new IllegalArgumentException(message);
+        }
+    }
 }

@@ -1,10 +1,17 @@
 package org.gojul.gojulutils.hibernateutils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+
 import org.gojul.gojulutils.validation.GojulPreconditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.*;
 
 /**
  * <p>
@@ -17,34 +24,34 @@ import java.util.*;
  * <p>
  * Beware that this object is not thread-safe.
  * </p>
- *
+ * 
  * @author julien
  *
  * @param <K> the type of the key of elements. This should be the type of the element primary keys. 
  * @param <E> the type of elements to merge.
- *
+ * 
  * @see org.gojul.gojulutils.hibernateutils.GojulHibernateKeyInstanciator
  */
 public class GojulHibernateCollectionsMergeTool<K, E extends GojulHibernateMergeable<E>> {
-
+    
     private final static Logger log = LoggerFactory.getLogger(GojulHibernateCollectionsMergeTool.class);
 
     private GojulHibernateKeyInstanciator<K, E> keyInstanciator;
-
+    
     private Map<K, List<E>> sourceEntitiesByKeys;
-
+    
     /**
      * Constructor.
      * @param keyInstanciator the key instanciator used to generate keys.
      * @param sourceEntities the list of source entities. Actually they will serve as the merge
      * source, and will be merged with target entities. However the entities from this collection will
      * remain unaltered.
-     *
+     * 
      * @throws NullPointerException if any of the method parameters is {@code null}.
      * @throws IllegalArgumentException if {@code sourceEntities} is {@code null}.
      */
-    public GojulHibernateCollectionsMergeTool(final GojulHibernateKeyInstanciator<K, E> keyInstanciator,
-                                              final Set<E> sourceEntities) {
+    public GojulHibernateCollectionsMergeTool(final GojulHibernateKeyInstanciator<K, E> keyInstanciator, 
+            final Set<E> sourceEntities) {
         Objects.requireNonNull(keyInstanciator, "keyInstanciator is null");
         Objects.requireNonNull(sourceEntities, "sourceEntities is null");
         GojulPreconditions.checkAssertion(!sourceEntities.contains(null), "sourceEntities contains null value while forbidden");
@@ -60,7 +67,7 @@ public class GojulHibernateCollectionsMergeTool<K, E extends GojulHibernateMerge
             entities.add(entity);
         }
     }
-
+    
     /**
      * <p>
      * Update the set {@code entities} with the entities stored in the current instance. This
@@ -75,9 +82,9 @@ public class GojulHibernateCollectionsMergeTool<K, E extends GojulHibernateMerge
      * otherwise merge will fail with Hibernate complaining that some elements are already present
      * in database but not bound to a session.
      * </p>
-     *
+     *  
      * @param entities the set of entities to update.
-     *
+     * 
      * @throws NullPointerException if {@code entities} is {@code null}.
      * @throws IllegalArgumentException if {@code entities} contains the {@code null} value.
      * @throws IllegalStateException if there are several entities from this object which match
@@ -87,16 +94,16 @@ public class GojulHibernateCollectionsMergeTool<K, E extends GojulHibernateMerge
     public void mergeEntitiesWithoutDelete(final Set<E> entities) {
         Objects.requireNonNull(entities, "entities is null");
         GojulPreconditions.checkAssertion(!entities.contains(null), "entities contains null value");
-
+        
         Set<K> unprocessedKeys = new HashSet<>(sourceEntitiesByKeys.keySet());
         for (E entityToMerge: entities) {
             E sourceEntity = getSourceEntityAndMarkKeyAsProcessed(entityToMerge, unprocessedKeys);
             entityToMerge.mergeEntity(sourceEntity);
         }
-
+        
         addRemainingEntities(entities, unprocessedKeys);
     }
-
+    
     /**
      * <p>
      * Update the set {@code entities} with the entities stored in the current instance. This
@@ -118,12 +125,12 @@ public class GojulHibernateCollectionsMergeTool<K, E extends GojulHibernateMerge
      * consists in both removing them from the collection, and then remove them by a DAO call before saving
      * the entity which contains the {@code OneToMany} relationship.
      * </p>
-     *
+     *  
      * @param entities the set of entities to update.
-     *
+     * 
      * @return the set of keys of the removed elements from {@code entitiess}. Such a {@link Set} can then be
      * directly used in a database {@code delete} call.
-     *
+     * 
      * @throws NullPointerException if {@code entities} is {@code null}.
      * @throws IllegalArgumentException if {@code entities} contains the {@code null} value.
      * @throws IllegalStateException if there are several entities from this object which match
@@ -133,7 +140,7 @@ public class GojulHibernateCollectionsMergeTool<K, E extends GojulHibernateMerge
     public Set<K> mergeEntitiesWithDelete(final Set<E> entities) {
         Objects.requireNonNull(entities, "entities is null");
         GojulPreconditions.checkAssertion(!entities.contains(null), "entities contains null value");
-
+        
         Set<K> keysToRemove = new HashSet<>();
         Set<K> unprocessedKeys = new HashSet<>(sourceEntitiesByKeys.keySet());
         for (Iterator<E> it = entities.iterator(); it.hasNext(); ) {
@@ -146,19 +153,19 @@ public class GojulHibernateCollectionsMergeTool<K, E extends GojulHibernateMerge
                 entityToMerge.mergeEntity(sourceEntity);
             }
         }
-
+        
         addRemainingEntities(entities, unprocessedKeys);
-
+        
         return keysToRemove;
     }
-
+    
     private E getSourceEntityAndMarkKeyAsProcessed(final E entityToMerge, final Set<K> unprocessedKeys) {
         K key = keyInstanciator.generateKey(entityToMerge);
         E result = getEntityForKey(key);
         unprocessedKeys.remove(key);
         return result;
     }
-
+    
     private E getEntityForKey(final K key) {
         List<E> entities = sourceEntitiesByKeys.get(key);
         if (entities == null || entities.isEmpty()) {
@@ -171,7 +178,7 @@ public class GojulHibernateCollectionsMergeTool<K, E extends GojulHibernateMerge
         }
         return entities.get(0);
     }
-
+    
     private void addRemainingEntities(final Set<E> entities, final Set<K> unprocessedKeys) {
         for (K key: unprocessedKeys) {
             List<E> sourceEntities = sourceEntitiesByKeys.get(key);
@@ -180,5 +187,5 @@ public class GojulHibernateCollectionsMergeTool<K, E extends GojulHibernateMerge
             }
         }
     }
-
+    
 }

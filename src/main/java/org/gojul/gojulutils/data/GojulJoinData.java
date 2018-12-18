@@ -6,6 +6,7 @@ import java.util.*;
  * <p>
  * Class {@code GojulJoinData} contains the data required in order to perform
  * an equivalent to the JOIN operations in database. Basically it works as such :
+ * </p>
  * <ul>
  *     <li>There are two classes, S and T, on which the join must be performed.</li>
  *     <li>For each of the classes, a dedicated function exists whose purpose is to generate the JOIN key of type K.</li>
@@ -13,7 +14,6 @@ import java.util.*;
  *     for matching keys. Objects which have a {@code null} key on one side are bound to the objects with a {@code null}
  *     key on the other side.</li>
  * </ul>
- * </p>
  * <p>Note that this object is immutable if and only if S and T are immutable classes.</p>
  *
  * @param <K> the type of the JOIN key.
