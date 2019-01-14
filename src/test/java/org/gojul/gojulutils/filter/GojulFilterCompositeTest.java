@@ -28,7 +28,8 @@ public class GojulFilterCompositeTest {
         composite.accept(null, "hello");
     }
 
-    @Test
+    @SuppressWarnings("unchecked")
+	@Test
     public void testAcceptWithOneFilterNotPassingReturnFalseAndSkipOtherFilters() {
         Date d = new Date();
 
@@ -48,7 +49,8 @@ public class GojulFilterCompositeTest {
         verifyNoMoreInteractions(f3);
     }
 
-    @Test
+    @SuppressWarnings("unchecked")
+	@Test
     public void testAccept() {
         Date d = new Date();
 
