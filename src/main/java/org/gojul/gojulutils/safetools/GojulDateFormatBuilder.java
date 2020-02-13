@@ -55,7 +55,8 @@ public class GojulDateFormatBuilder {
      * If method {@link GojulDateFormatBuilder#setSymbols(DateFormatSymbols)}
      * is used with a non-null {@link DateFormatSymbols} instance this parameter
      * will just be ignored.
-     * @param locale the {@link locale} to set.
+     *
+     * @param locale the {@link Locale} to set.
      * @return the builder instance.
      */
     public GojulDateFormatBuilder setLocale(final Locale locale) {
