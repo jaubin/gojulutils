@@ -19,42 +19,19 @@ import java.util.*;
  * @param <K> the type of the JOIN key.
  * @param <S> the type of the first object to join.
  * @param <T> the type of the second object to join.
- *
  * @see org.gojul.gojulutils.data.GojulJoinDataService
  */
 public class GojulJoinData<K, S, T> {
 
-    /**
-     * Class {@code GojulJoinDataKey} purpose is to compute
-     * the JOIN key for an object of type {@code V}. Note that
-     * if you assume your objects are nullable this key should
-     * take the {@code null} case into account.
-     *
-     * @param <K> the type of the key.
-     * @param <V> the type of the value for which the key is generated.
-     */
-    @FunctionalInterface
-    public interface GojulJoinDataKey<K, V> {
-
-        /**
-         * Return the key corresponding to value {@code value}.
-         * @param value the value for which the key must be computed.
-         * @return the key corresponding to value {@code value}.
-         */
-        K getKey(final V value);
-    }
-
     private final Map<K, List<S>> leftElementsPerKey;
     private final Map<K, List<T>> rightElementsKey;
-
     /**
      * Constructor.
      *
-     * @param leftKey the function in charge of generating the key for the left elements to join.
-     * @param leftElements the left elements to join.
-     * @param rightKey the function in charge of generating the key for the right elements to join.
+     * @param leftKey       the function in charge of generating the key for the left elements to join.
+     * @param leftElements  the left elements to join.
+     * @param rightKey      the function in charge of generating the key for the right elements to join.
      * @param rightElements the right elements to join.
-     *
      * @throws NullPointerException if any of the method parameters is {@code null}.
      */
     public GojulJoinData(final GojulJoinDataKey<K, S> leftKey, final Iterable<S> leftElements,
@@ -73,7 +50,7 @@ public class GojulJoinData<K, S, T> {
         // Thus we use a LinkedHashMap to make it easier to write unit tests later on.
         Map<K, List<V>> result = new LinkedHashMap<>();
 
-        for (V elem: data) {
+        for (V elem : data) {
             K key = keyGen.getKey(elem);
             List<V> valuesForKey = result.get(key);
             if (valuesForKey == null) {
@@ -109,14 +86,12 @@ public class GojulJoinData<K, S, T> {
     private <V> Map<K, List<V>> deepUnmodifiableMap(final Map<K, List<V>> map) {
         Map<K, List<V>> result = new LinkedHashMap<>();
 
-        for (Map.Entry<K, List<V>> entry: map.entrySet()) {
+        for (Map.Entry<K, List<V>> entry : map.entrySet()) {
             result.put(entry.getKey(), Collections.unmodifiableList(entry.getValue()));
         }
 
         return Collections.unmodifiableMap(result);
     }
-
-    // Equals and HashCode are here only to make it easier to write unit tests.
 
     /**
      * {@inheritDoc}
@@ -133,6 +108,8 @@ public class GojulJoinData<K, S, T> {
         return rightElementsKey != null ? rightElementsKey.equals(that.rightElementsKey) : that.rightElementsKey == null;
     }
 
+    // Equals and HashCode are here only to make it easier to write unit tests.
+
     /**
      * {@inheritDoc}
      */
@@ -141,5 +118,26 @@ public class GojulJoinData<K, S, T> {
         int result = leftElementsPerKey != null ? leftElementsPerKey.hashCode() : 0;
         result = 31 * result + (rightElementsKey != null ? rightElementsKey.hashCode() : 0);
         return result;
+    }
+
+    /**
+     * Class {@code GojulJoinDataKey} purpose is to compute
+     * the JOIN key for an object of type {@code V}. Note that
+     * if you assume your objects are nullable this key should
+     * take the {@code null} case into account.
+     *
+     * @param <K> the type of the key.
+     * @param <V> the type of the value for which the key is generated.
+     */
+    @FunctionalInterface
+    public interface GojulJoinDataKey<K, V> {
+
+        /**
+         * Return the key corresponding to value {@code value}.
+         *
+         * @param value the value for which the key must be computed.
+         * @return the key corresponding to value {@code value}.
+         */
+        K getKey(final V value);
     }
 }

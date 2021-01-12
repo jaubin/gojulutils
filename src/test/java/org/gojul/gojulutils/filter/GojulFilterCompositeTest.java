@@ -29,7 +29,7 @@ public class GojulFilterCompositeTest {
     }
 
     @SuppressWarnings("unchecked")
-	@Test
+    @Test
     public void testAcceptWithOneFilterNotPassingReturnFalseAndSkipOtherFilters() {
         Date d = new Date();
 
@@ -50,7 +50,7 @@ public class GojulFilterCompositeTest {
     }
 
     @SuppressWarnings("unchecked")
-	@Test
+    @Test
     public void testAccept() {
         Date d = new Date();
 

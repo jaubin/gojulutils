@@ -7,10 +7,9 @@ package org.gojul.gojulutils.data;
  * this object is not serializable it should not be stored in objects which could be serialized,
  * especially Java HttpSession objects.
  *
- * @author jaubin
- *
  * @param <S> the type of the first object of the pair.
  * @param <T> the type of the second object of the pair.
+ * @author jaubin
  */
 public final class GojulPair<S, T> {
 
@@ -21,7 +20,7 @@ public final class GojulPair<S, T> {
      * Constructor. Both parameters are nullable. Note that this constructor
      * does not perform any defensive copy as it is not possible there.
      *
-     * @param first the first object.
+     * @param first  the first object.
      * @param second the second object.
      */
     public GojulPair(final S first, final T second) {
@@ -31,6 +30,7 @@ public final class GojulPair<S, T> {
 
     /**
      * Return the first object.
+     *
      * @return the first object.
      */
     public S getFirst() {
@@ -39,6 +39,7 @@ public final class GojulPair<S, T> {
 
     /**
      * Return the second object.
+     *
      * @return the second object.
      */
     public T getSecond() {

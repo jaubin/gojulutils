@@ -1,12 +1,11 @@
 package org.gojul.gojulutils.validation;
 
-import java.io.Serializable;
-import java.util.Objects;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * <p>
@@ -19,12 +18,11 @@ import javax.xml.bind.annotation.XmlType;
  * If you wish to take benefit of the Jaxb serialization mechanism don't forget to annotate the parameter
  * classes with Jaxb annotations.
  * </p>
- * 
- * @author julien
- * 
+ *
  * @param <K> the key of the message, which identifies the element of the user interface that is
- * intended to be targeted by the error message. This object should be immutable.
+ *            intended to be targeted by the error message. This object should be immutable.
  * @param <V> the message itself to display. This object should be immutable.
+ * @author julien
  */
 @XmlType
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -34,15 +32,15 @@ public class GojulValidationErrorMessage<K extends Serializable, V extends Seria
 
     @XmlElement
     private final K uiTarget;
-    
+
     @XmlElement
     private final V message;
-    
+
     /**
      * Constructor.
+     *
      * @param uiTarget the element to be targetted by this message in the UI.
-     * @param message the message to display.
-     * 
+     * @param message  the message to display.
      * @throws NullPointerException if any of the method parameters is {@code null}.
      */
     public GojulValidationErrorMessage(final K uiTarget, final V message) {
@@ -51,18 +49,20 @@ public class GojulValidationErrorMessage<K extends Serializable, V extends Seria
         this.uiTarget = uiTarget;
         this.message = message;
     }
-    
+
     /**
      * Return the UI target element. This method is to be interpreted by the UI
      * layer as the location where the error message should be displayed.
-     * @return the UI target element. 
+     *
+     * @return the UI target element.
      */
     public K getUiTarget() {
         return this.uiTarget;
     }
-    
+
     /**
      * Return the message to display.
+     *
      * @return the message to display.
      */
     public V getMessage() {
@@ -114,6 +114,6 @@ public class GojulValidationErrorMessage<K extends Serializable, V extends Seria
     public String toString() {
         return "GojulValidationErrorMessage [uiTarget=" + uiTarget + ", message=" + message + "]";
     }
-    
-    
+
+
 }

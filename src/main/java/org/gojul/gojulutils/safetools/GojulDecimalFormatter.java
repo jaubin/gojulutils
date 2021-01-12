@@ -17,17 +17,121 @@ import java.util.concurrent.ConcurrentMap;
  * Note that this class does not declare parse methods of {@link DecimalFormat} instances currently
  * because they're only seldom used..
  * </p>
- * 
- * @author julien
  *
+ * @author julien
  */
 public class GojulDecimalFormatter {
 
+    private final static ConcurrentMap<String, DecimalFormat> DECIMAL_FORMATS_BY_FORMAT = new ConcurrentHashMap<>();
+    private final static ConcurrentMap<DecimalFormatKey, DecimalFormat> DECIMAL_FORMATS_BY_KEY = new ConcurrentHashMap<>();
+
+    private GojulDecimalFormatter() {
+        // Private constructor. Prevents class from
+        // being instanciated from the outside.
+    }
+
+    /**
+     * Format value {@code d} using format {@code format}.
+     *
+     * @param format the format to apply.
+     * @param d      the value to format.
+     * @return the formatted value.
+     * @throws NullPointerException if {@code format} is {@code null}.
+     */
+    public static String format(final String format, final double d) {
+        Objects.requireNonNull(format, "format is null");
+        DecimalFormat df = retrieveFromFormat(format);
+        // It's not a big issue here to use synchronized block because the
+        // JVM has been highly optimized to handle this.
+        synchronized (df) {
+            return df.format(d);
+        }
+    }
+
+    /**
+     * Format value {@code l} using format {@code format}.
+     *
+     * @param format the format to apply.
+     * @param l      the value to format.
+     * @return the formatted value.
+     * @throws NullPointerException if {@code format} is {@code null}.
+     */
+    public static String format(final String format, final long l) {
+        Objects.requireNonNull(format, "format is null");
+        DecimalFormat df = retrieveFromFormat(format);
+        // It's not a big issue here to use synchronized block because the
+        // JVM has been highly optimized to handle this.
+        synchronized (df) {
+            return df.format(l);
+        }
+    }
+
+    private static DecimalFormat retrieveFromFormat(final String format) {
+        DecimalFormat df = DECIMAL_FORMATS_BY_FORMAT.get(format);
+        if (df == null) {
+            df = new DecimalFormat(format);
+            DecimalFormat cached = DECIMAL_FORMATS_BY_FORMAT.putIfAbsent(format, df);
+            df = cached == null ? df : cached;
+        }
+        return df;
+    }
+
+    /**
+     * Format value {@code d} using format {@code format} and format symbols {@code symbols}.
+     *
+     * @param format  the format to apply.
+     * @param symbols the symbols to use for formatting.
+     * @param d       the value to format.
+     * @return the formatted value.
+     * @throws NullPointerException if {@code format} or {@code symbols} is {@code null}.
+     */
+    public static String format(final String format, final DecimalFormatSymbols symbols, final double d) {
+        Objects.requireNonNull(format, "format is null");
+        Objects.requireNonNull(symbols, "symbols is null");
+        DecimalFormat df = retrieveFromKey(format, symbols);
+        // It's not a big issue here to use synchronized block because the
+        // JVM has been highly optimized to handle this.
+        synchronized (df) {
+            return df.format(d);
+        }
+    }
+
+    /**
+     * Format value {@code l} using format {@code format} and format symbols {@code symbols}.
+     *
+     * @param format  the format to apply.
+     * @param symbols the symbols to use for formatting.
+     * @param l       the value to format.
+     * @return the formatted value.
+     * @throws NullPointerException if {@code format} or {@code symbols} is {@code null}.
+     */
+    public static String format(final String format, final DecimalFormatSymbols symbols, final long l) {
+        Objects.requireNonNull(format, "format is null");
+        Objects.requireNonNull(symbols, "symbols is null");
+        DecimalFormat df = retrieveFromKey(format, symbols);
+        // It's not a big issue here to use synchronized block because the
+        // JVM has been highly optimized to handle this.
+        synchronized (df) {
+            return df.format(l);
+        }
+    }
+
+    private static DecimalFormat retrieveFromKey(final String format, final DecimalFormatSymbols symbols) {
+        DecimalFormatKey key = new DecimalFormatKey(format, symbols);
+        DecimalFormat df = DECIMAL_FORMATS_BY_KEY.get(key);
+        if (df == null) {
+            df = new DecimalFormat(format, symbols);
+            DecimalFormat cached = DECIMAL_FORMATS_BY_KEY.putIfAbsent(key, df);
+            df = cached == null ? df : cached;
+        }
+        return df;
+    }
+
     private final static class DecimalFormatKey {
-        
+
         private String format;
         private DecimalFormatSymbols symbols;
-        
+
         public DecimalFormatKey(final String format, final DecimalFormatSymbols symbols) {
             this.format = format;
             this.symbols = symbols;
@@ -63,112 +167,6 @@ public class GojulDecimalFormatter {
                 return false;
             return true;
         }
-        
-    }
-    
-    private final static ConcurrentMap<String, DecimalFormat> DECIMAL_FORMATS_BY_FORMAT = new ConcurrentHashMap<>();
-    
-    private final static ConcurrentMap<DecimalFormatKey, DecimalFormat> DECIMAL_FORMATS_BY_KEY = new ConcurrentHashMap<>();
-    
-    private GojulDecimalFormatter() {
-        // Private constructor. Prevents class from
-        // being instanciated from the outside.
-    }
-    
-    /**
-     * Format value {@code d} using format {@code format}.
-     * @param format the format to apply.
-     * @param d the value to format.
-     * @return the formatted value.
-     * 
-     * @throws NullPointerException if {@code format} is {@code null}.
-     */
-    public static String format(final String format, final double d) {
-        Objects.requireNonNull(format, "format is null");
-        DecimalFormat df = retrieveFromFormat(format);
-        // It's not a big issue here to use synchronized block because the
-        // JVM has been highly optimized to handle this.
-        synchronized(df) {
-            return df.format(d);
-        }
-    }
-    
-    /**
-     * Format value {@code l} using format {@code format}.
-     * @param format the format to apply.
-     * @param l the value to format.
-     * @return the formatted value.
-     * 
-     * @throws NullPointerException if {@code format} is {@code null}.
-     */
-    public static String format(final String format, final long l) {
-        Objects.requireNonNull(format, "format is null");
-        DecimalFormat df = retrieveFromFormat(format);
-        // It's not a big issue here to use synchronized block because the
-        // JVM has been highly optimized to handle this.
-        synchronized(df) {
-            return df.format(l);
-        }
-    }
-    
-    private static DecimalFormat retrieveFromFormat(final String format) {
-        DecimalFormat df = DECIMAL_FORMATS_BY_FORMAT.get(format);
-        if (df == null) {
-            df = new DecimalFormat(format);
-            DecimalFormat cached = DECIMAL_FORMATS_BY_FORMAT.putIfAbsent(format, df);
-            df = cached == null ? df: cached;
-        }
-        return df;
-    }
-    
-    /**
-     * Format value {@code d} using format {@code format} and format symbols {@code symbols}.
-     * @param format the format to apply.
-     * @param symbols the symbols to use for formatting.
-     * @param d the value to format.
-     * @return the formatted value.
-     * 
-     * @throws NullPointerException if {@code format} or {@code symbols} is {@code null}.
-     */
-    public static String format(final String format, final DecimalFormatSymbols symbols, final double d) {
-        Objects.requireNonNull(format, "format is null");
-        Objects.requireNonNull(symbols, "symbols is null");
-        DecimalFormat df = retrieveFromKey(format, symbols);
-        // It's not a big issue here to use synchronized block because the
-        // JVM has been highly optimized to handle this.
-        synchronized(df) {
-            return df.format(d);
-        }
-    }
-    
-    /**
-     * Format value {@code l} using format {@code format} and format symbols {@code symbols}.
-     * @param format the format to apply.
-     * @param symbols the symbols to use for formatting.
-     * @param l the value to format.
-     * @return the formatted value.
-     * 
-     * @throws NullPointerException if {@code format} or {@code symbols} is {@code null}.
-     */
-    public static String format(final String format, final DecimalFormatSymbols symbols, final long l) {
-        Objects.requireNonNull(format, "format is null");
-        Objects.requireNonNull(symbols, "symbols is null");
-        DecimalFormat df = retrieveFromKey(format, symbols);
-        // It's not a big issue here to use synchronized block because the
-        // JVM has been highly optimized to handle this.
-        synchronized(df) {
-            return df.format(l);
-        }
-    }
-    
-    private static DecimalFormat retrieveFromKey(final String format, final DecimalFormatSymbols symbols) {
-        DecimalFormatKey key = new DecimalFormatKey(format, symbols);
-        DecimalFormat df = DECIMAL_FORMATS_BY_KEY.get(key);
-        if (df == null) {
-            df = new DecimalFormat(format, symbols);
-            DecimalFormat cached = DECIMAL_FORMATS_BY_KEY.putIfAbsent(key, df);
-            df = cached == null ? df: cached;
-        }
-        return df;
+
     }
 }

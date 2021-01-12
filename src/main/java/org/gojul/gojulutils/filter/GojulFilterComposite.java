@@ -18,9 +18,9 @@ public class GojulFilterComposite<S, T> implements GojulFilter<S, T> {
 
     /**
      * Constructor.
+     *
      * @param filters the list of filters to apply. These filters will be applied
      *                following the order in which they're declared in the list.
-     *
      * @throws NullPointerException if {@code filters} is {@code null}.
      */
     public GojulFilterComposite(final List<GojulFilter<S, T>> filters) {
@@ -35,7 +35,7 @@ public class GojulFilterComposite<S, T> implements GojulFilter<S, T> {
     public boolean accept(final S value, final T context) {
         Objects.requireNonNull(value, "value is null");
 
-        for (GojulFilter<S, T> filter: filters) {
+        for (GojulFilter<S, T> filter : filters) {
             if (!filter.accept(value, context)) {
                 return false;
             }

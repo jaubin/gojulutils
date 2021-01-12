@@ -1,8 +1,8 @@
 package org.gojul.gojulutils.validation;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class GojulValidationErrorMessageTest {
 
@@ -15,11 +15,11 @@ public class GojulValidationErrorMessageTest {
     public void testConstructorWithNullMessageThrowsException() {
         new GojulValidationErrorMessage<String, String>("uiTarget", null);
     }
-    
+
     @Test
     public void testAll() {
         GojulValidationErrorMessage<String, String> msg = new GojulValidationErrorMessage<>("uiTarget", "message");
-        
+
         assertEquals("uiTarget", msg.getUiTarget());
         assertEquals("message", msg.getMessage());
     }

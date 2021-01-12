@@ -8,10 +8,9 @@ package org.gojul.gojulutils.filter;
  * of concerns, meaning that on one side you iterate over a list of elements to accept, and
  * on the other side you implement the accept logic.
  *
- * @author jaubin
- *
  * @param <S> the type of elements to accept.
  * @param <T> the type of the filtering context.
+ * @author jaubin
  */
 public interface GojulFilter<S, T> {
 
@@ -22,11 +21,10 @@ public interface GojulFilter<S, T> {
      * or not. This filtering context can contain some additional information
      * used for filtering.
      *
-     * @param value the value to accept.
+     * @param value   the value to accept.
      * @param context the filtering context object. This parameter can be {@code null},
      *                depending on your actual needs.
      * @return {@code true} if {@code value} satisfies the accept criteria, {@code false} otherwise.
-     *
      * @throws NullPointerException if {@code value} is {@code null}.
      */
     boolean accept(final S value, final T context);
