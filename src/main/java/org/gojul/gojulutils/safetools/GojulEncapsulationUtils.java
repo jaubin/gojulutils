@@ -16,6 +16,7 @@ public class GojulEncapsulationUtils {
     private GojulEncapsulationUtils() {
         // Private constructor. Prevents class from
         // being instanciated from the outside.
+        throw new RuntimeException("Shoo away !!!");
     }
 
     /**
