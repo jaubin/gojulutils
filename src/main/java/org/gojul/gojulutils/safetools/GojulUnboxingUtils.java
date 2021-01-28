@@ -12,7 +12,7 @@ public class GojulUnboxingUtils {
     private GojulUnboxingUtils() {
         // Private constructor. Prevents class from
         // being instanciated from the outside.
-        throw new RuntimeException("Shoo away !!!");
+        throw new IllegalStateException("Shoo away !!!");
     }
 
     /**

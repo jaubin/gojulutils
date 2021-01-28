@@ -28,6 +28,7 @@ public class GojulDecimalFormatter {
     private GojulDecimalFormatter() {
         // Private constructor. Prevents class from
         // being instanciated from the outside.
+        throw new IllegalStateException("Shoo away !!!");
     }
 
     /**
@@ -129,8 +130,8 @@ public class GojulDecimalFormatter {
 
     private final static class DecimalFormatKey {
 
-        private String format;
-        private DecimalFormatSymbols symbols;
+        private final String format;
+        private final DecimalFormatSymbols symbols;
 
         public DecimalFormatKey(final String format, final DecimalFormatSymbols symbols) {
             this.format = format;
@@ -161,11 +162,8 @@ public class GojulDecimalFormatter {
             } else if (!format.equals(other.format))
                 return false;
             if (symbols == null) {
-                if (other.symbols != null)
-                    return false;
-            } else if (!symbols.equals(other.symbols))
-                return false;
-            return true;
+                return other.symbols == null;
+            } else return symbols.equals(other.symbols);
         }
 
     }

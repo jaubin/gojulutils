@@ -16,7 +16,7 @@ public class GojulEncapsulationUtils {
     private GojulEncapsulationUtils() {
         // Private constructor. Prevents class from
         // being instanciated from the outside.
-        throw new RuntimeException("Shoo away !!!");
+        throw new IllegalStateException("Shoo away !!!");
     }
 
     /**
@@ -155,7 +155,7 @@ public class GojulEncapsulationUtils {
      * @param <T> the class of the element to copy.
      * @author julien
      */
-    public static interface GojulCopyFunction<T> {
+    public interface GojulCopyFunction<T> {
 
         /**
          * Perform a deep copy of the object {@code elem} and returns it.
@@ -164,7 +164,7 @@ public class GojulEncapsulationUtils {
          * @param elem the element to copy.
          * @return a deep copy of the object {@code elem} and returns it.
          */
-        public T copy(final T elem);
+        T copy(final T elem);
     }
 
 

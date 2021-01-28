@@ -35,6 +35,7 @@ public class GojulDateFormatter {
     private GojulDateFormatter() {
         // Private constructor. Prevents class from
         // being instanciated from the outside.
+        throw new IllegalStateException("Shoo away !!!");
     }
 
     /**
