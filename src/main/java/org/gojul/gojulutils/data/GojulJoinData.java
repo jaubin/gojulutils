@@ -25,6 +25,7 @@ public class GojulJoinData<K, S, T> {
 
     private final Map<K, List<S>> leftElementsPerKey;
     private final Map<K, List<T>> rightElementsKey;
+
     /**
      * Constructor.
      *
